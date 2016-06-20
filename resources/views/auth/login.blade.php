@@ -1,97 +1,66 @@
-@extends('admin.layout.master')
+@extends('layouts.app')
 
 @section('content')
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+            <div class="panel panel-default">
+                <div class="panel-heading">Login</div>
+                <div class="panel-body">
+                    <form class="form-horizontal" role="form" method="POST" action="{{ url('/login') }}">
+                        {{ csrf_field() }}
 
+                        <div class="form-group{{ $errors->has('username') ? ' has-error' : '' }}">
+                            <label for="username" class="col-md-4 control-label">User name</label>
 
-    @if(count($errors) > 0)
-        <section class="info-box fail">
-            {{$errors}}
-            <ul>
-                @foreach($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </section>
-    @endif
+                            <div class="col-md-6">
+                                <input id="username" type="username" class="form-control" name="username" value="{{ old('username') }}">
 
-    @if( Session::has('fail'))
-        <section class="info-box fail">
-            {{$errors}}
-            <ul>
-                @foreach($errors->all() as $error)
-                    <li>{{ Session::get('fail') }}</li>
-                @endforeach
-            </ul>
-        </section>
-    @endif
+                                @if ($errors->has('username'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('username') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
 
+                        <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
+                            <label for="password" class="col-md-4 control-label">Password</label>
 
+                            <div class="col-md-6">
+                                <input id="password" type="password" class="form-control" name="password">
 
-    <div id="loginModal" class="modal show" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                <h1 class="text-center">Login</h1>
-            </div>
-            <div class="modal-body">
-                {{--<form class="form col-md-12 center-block">--}}
+                                @if ($errors->has('password'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('password') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
 
-                    {!! Form::open(['name' => 'frm_admin_login',
-         'class' => 'form col-md-12 center-block']) !!}
+                        <div class="form-group">
+                            <div class="col-md-6 col-md-offset-4">
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" name="remember"> Remember Me
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
 
+                        <div class="form-group">
+                            <div class="col-md-6 col-md-offset-4">
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fa fa-btn fa-sign-in"></i> Login
+                                </button>
 
-                    <div class="form-group">
-                        {{--<input type="text" class="form-control input-lg" placeholder="Email">--}}
-
-                        {!! Form::text('name', null, [
-                                'id'    => 'name',
-                                'class' => 'form-control input-lg',
-                                'placeholder' => 'your name'
-                                ]) !!}
-
-                @if ($errors->has('name'))
-                    <p class="help-block alert alert-danger">{{ $errors->first('name') }}</p>
-                @endif
-                    </div>
-                    <div class="form-group">
-                        {{--<input type="password" class="form-control input-lg" placeholder="Password">--}}
-                    {{--</div>--}}
-
-                {!! Form::password('password', [
-                                'class'=>'form-control input-lg',
-                                'placeholder'=>'your password'
-                                ]) !!}
-
-                        {{--<input type="password" class="form-control input-lg" placeholder="Password">--}}
-                @if ($errors->has('password'))
-                    <p class="help-block alert alert-danger">{{ $errors->first('password') }}</p>
-                @endif
-            </div>
-
-
-
-                    <div class="form-group">
-                        {{--<button class="btn btn-primary btn-lg btn-block">Sign In</button>--}}
-
-
-                        {!! Form::submit('Login', ['class' => 'btn btn-primary btn-lg btn-block']) !!}
-
-
-
-                    </div>
-                {{--</form>--}}
-                {!! Form::close() !!}
-            </div>
-            <div class="modal-footer">
-                {{--<div class="col-md-12">--}}
-                    {{--<button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>--}}
-                {{--</div>--}}
+                                <a class="btn btn-link" href="{{ url('/password/reset') }}">Forgot Your Password?</a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
-    </div>
-    <!-- script references -->
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
+</div>
 @endsection
