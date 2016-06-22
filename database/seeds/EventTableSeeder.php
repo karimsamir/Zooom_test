@@ -21,11 +21,9 @@ class EventTableSeeder extends Seeder
         $allCountries = DB::table('country')->select('id', 'country_code')->get();
         
         $arrCountries = array();
-        $arrCountries2 = array();
 
             foreach ($allCountries as $key => $country){
                 $arrCountries[$country->country_code] = $country->id;
-                $arrCountries[$country->id] = $country->country_code;
             }
             
             
@@ -39,7 +37,7 @@ class EventTableSeeder extends Seeder
                 $country_id =   $arrCountries[$faker->countryCode];
             }
             else{
-                $country_id =   $arrCountries2[rand(1, 246)];
+                $country_id =   rand(1, 246);
             }
             
             $event = array(

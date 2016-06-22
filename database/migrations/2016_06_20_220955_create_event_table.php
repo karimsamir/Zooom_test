@@ -30,8 +30,8 @@ class CreateEventTable extends Migration {
             $table->float('latitude');
             $table->string('zip', 15);
             $table->text('description');
-            $table->timestamp('startdate');
-            $table->timestamp('enddate');
+            $table->timestamp('start_date');
+            $table->timestamp('end_date');
             $table->timestamps();
             
         });
