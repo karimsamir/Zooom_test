@@ -28,9 +28,9 @@ class EventTableSeeder extends Seeder
             
             
         for ($i = 0; $i < $limit; $i++) {
-            
+                         
             $start_date = $faker->dateTime;
-            $end_date = $faker->dateTimeBetween($start_date);
+            $end_date = $faker->dateTimeBetween("-1 year");
             $country_id = 1;
             
             if (array_key_exists($faker->countryCode, $arrCountries)) {
