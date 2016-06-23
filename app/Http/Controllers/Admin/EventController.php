@@ -172,7 +172,7 @@ class EventController extends Controller {
     public function destroy(Request $request, $id) {
 
         // get event event with event_id
-        $event = Event::find($id)->first();
+        $event = Event::find($id);
 
         if ($event && $request->ajax()) {
 
