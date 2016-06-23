@@ -50,7 +50,8 @@ class EventTableSeeder extends Seeder
                 "start_date" => $start_date,
                 "end_date" => $end_date,
                 "country_id" =>   $country_id,
-                "category_id" => rand(1, 3)    
+                "category_id" => rand(1, 3),
+                "position" => $i + 1
                 
             );
             
