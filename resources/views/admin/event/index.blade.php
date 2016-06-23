@@ -5,12 +5,65 @@
     @include('admin.event.includes.ajaxIndex')
 </div>
 
+<div class="col-md-4 pull-right">
+    <div class="btn-group dropup" style="float:right">
+        <a href="#" id="add_new_event" class="btn btn-primary">
+            Create new Event
+        </a>
+    </div>
+</div>
+
+
+<div id="hidden_form" class="hidden">
+
+    <h3>
+        <span class="event_title title_20000">Create new event</span>
+        <button data-id="0" class="btn btn-danger pull-right delete_event">
+            Delete<i class="fa fa-trash"></i>
+        </button>
+    </h3>
+    <div>
+
+
+
+        {!! Form::open([
+        'method' => 'POST',
+        'name' => 'frm_update_event', 
+        'route' => ['storeEvent'],
+        'class' => 'form-horizontal',
+        'data-index' => 20000
+        ]) !!}
+
+        @include('admin.event.includes.form',
+        ['submitButtonText'  => 'Save'
+        ])
+
+        {!! Form::close() !!}
+    </div>
+
+</div>
+
+<div class="hidden">
+    <div id="dialog-confirm" title="Are you sure?">
+    <p>
+        <span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>
+        <span class="modal_warning_text">
+            This item will be permanently deleted and cannot be recovered. Are you sure?
+        </span>
+    </p>
+</div>
+    
+</div>
+
+
 @push('scripts')
 <link rel="stylesheet" type="text/css" href="{{ asset('bower_components/jquery-ui/themes/base/all.css') }}"/>
 <script>
     $(function () {
         $("#accordion").accordion({
-            collapsible: true
+            collapsible: true,
+            active: false,
+//             header: ".edit_event"
         });
     });
 
@@ -20,11 +73,12 @@
         return false;
     }); // end update event click event
 
-    $("#all_events").on("click", ".delete_event", function () {
-        var msgText = '<strong style="color:red">Warning!</strong><br><br>Are you sure that you want to Delete event ?';
+    $("#all_events").on("click", ".delete_event", function (e) {
+        e.preventDefault();
+        var frm_caller = $(this).closest("form");
+        var event_title = frm_caller.find("input[name=event_title]").val();
 
-        // add class to main div to mark as deleted
-        $(this).closest('.event-item').addClass("to_be_deleted");
+        var msgText = 'Are you sure that you want to Delete "' + event_title + '" event ?';
 
         // get the event id
         var event_id = $(this).attr('data-id');
@@ -35,14 +89,28 @@
             isSaved = false;
         }
 
-        confirmDelete(msgText, $(this).closest("form"), isSaved);
+        confirmDelete(msgText, frm_caller, isSaved);
 
         return false;
     }); // end delete event click event
 
     // click on add new button
-    $("#all_events").on("click", "#add_new_event", function () {
-        addNewSection();
+    $("#add_new_event").click(function () {
+//        addNewEvent();
+        var new_form = $("#hidden_form").html();
+        $("#accordion").append(new_form);
+        // deactive all if opened
+        $("#accordion").accordion("option", "active", false);
+        // refresh to add the new added form
+        $("#accordion").accordion("refresh");
+        // open the new added form
+        $(".title_20000").trigger("click");
+        // scroll to form
+        $('html,body').animate({
+            scrollTop: $(".title_20000").offset().top},
+                'slow');
+
+        $(this).hide();
     });
 
     $("#all_events").on("submit", "form[name=frm_create_event]", function (e) {
@@ -52,49 +120,32 @@
         return false;
     }); // end create event click event
 
-
-    function addNewSection() {
-        makeAllSectionsInactive();
-        var new_form = $("#hidden_form .event-item").clone();
-        $("#sort-event").append(new_form);
-
-        $("#sort-event .event-item").last().find(".fa").removeClass("fa-angle-down").addClass("fa-angle-up");
-        $("#sort-event .event-item").last().addClass("active");
-        ;
-
-    }
-
     function confirmDelete(msgText, frmCaller, isSaved) {
 
-        noty({
-            text: msgText,
-            layout: 'center',
-            buttons: [
-                {
-                    addClass: 'btn btn-success btn-clean',
-                    text: 'Ok',
-                    onClick: function ($noty) {
-                        $noty.close();
+        var original_text = $("#dialog-confirm").find(".modal_warning_text").html();
 
-                        if (isSaved) {
-                            // call the ajax to delete the event
-                            ajaxCaller(frmCaller);
-                        } else {
-                            $(".to_be_deleted").remove();
-                        }
+        $("#dialog-confirm").find(".modal_warning_text").html(msgText);
 
-
+        $("#dialog-confirm").dialog({
+            resizable: false,
+            height: "auto",
+            modal: true,
+            buttons: {
+                "Delete event": function () {
+                    if (isSaved) {
+                        // call the ajax to delete the event
+                        ajaxCaller(frmCaller);
+                    } else {
+                        $(".to_be_deleted").remove();
                     }
+                    $(this).dialog("close");
+                    $("#dialog-confirm").find(".modal_warning_text").html(original_text);
                 },
-                {
-                    addClass: 'btn btn-danger btn-clean',
-                    text: 'Cancel',
-                    onClick: function ($noty) {
-                        $noty.close();
-                    }
+                Cancel: function () {
+                    $(this).dialog("close");
                 }
-            ]
-        })
+            }
+        });
     }
 
     function ajaxCaller(frmCaller) {
@@ -131,7 +182,7 @@
                         ajaxRefreshPage(retData.msg);
                     } else if (frmName == "frm_update_event") {
                         // show event title from form input    
-                        $(".title_"+frmCaller.attr("data-index")).html(frmCaller.find("input[name=title]").val())
+                        $(".title_" + frmCaller.attr("data-index")).html(frmCaller.find("input[name=title]").val())
                     }
 
                 } else {
