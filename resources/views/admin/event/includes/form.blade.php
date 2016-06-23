@@ -43,9 +43,9 @@
 </div>
 
 <div class="form-group">
-    {!! Form::label('description', 'Event Description', array('class' => 'col-sm-2 control-label')) !!}
+    {!! Form::label('description', 'Description', array('class' => 'col-sm-2 control-label')) !!}
     {!! Form::textarea('description', null, [
-    'class' => 'form-control'
+
     ]) !!}
 </div>
 

@@ -31,4 +31,12 @@
     <!--</div>-->
 </div>
 
+@push('scripts')
+    <link rel="stylesheet" type="text/css" href="{{ asset('bower_components/jquery-ui/themes/base/all.css') }}"/>
+  <script>
+  $(function() {
+    $( "#accordion" ).accordion();
+  });
+  </script>
+@endpush  
 @endsection
