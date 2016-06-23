@@ -3,7 +3,7 @@
         
         <div id="accordion">
             @foreach($events as $key => $event)
-               
+            <div class="event_item">
                 <h3>
                     <span class="event_title title_{{$key}}">{{$event->title}}</span>
 
@@ -36,6 +36,7 @@
                         ])
 
                 {!! Form::close() !!}
+                </div>
                 </div>
             @endforeach
         </div>

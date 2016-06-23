@@ -31,18 +31,22 @@ Route::group(['middleware' => ['web']], function() {
 
 
             Route::resource('event', 'EventController', [
+                "except" =>["edit", "show"],
                 'names' =>
                 [
                     'index' => 'indexEvent',
-                    'show' => 'showEvent',
                     'create' => 'createEvent',
                     'store' => 'storeEvent',
-                    'edit' => 'editEvent',
                     'update' => 'updateEvent',
                     'destroy' => 'deleteEvent'
                 ]
                     ]
             );
+            
+            Route::post('event/changeposition', [
+                "uses" => "EventController@changePosition",
+                "as" => "changeEventPosition"
+            ]);
         });
     });
 });

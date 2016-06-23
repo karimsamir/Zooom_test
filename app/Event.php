@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
+use DB;
 
 class Event extends Model {
 
@@ -35,6 +36,25 @@ class Event extends Model {
 
     public function getEndDateAttribute() {
         return Carbon::parse($this->attributes['end_date'])->format('Y-m-d');
+    }
+ 
+    /**
+     * update event positions using transaction
+     * @param $positions array with event_id and position
+     */
+    public function updatePositions($positions)
+    {
+        // run a Db transaction to update positions
+        DB::transaction(function () use ($positions){
+
+            foreach($positions as $position){
+
+                DB::table($this->table)
+                    ->where(["id" => $position["event_id"]])
+                    ->update(['position' => $position["position"]]);
+
+            }
+        });
     }
 
 }

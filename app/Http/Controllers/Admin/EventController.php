@@ -154,7 +154,22 @@ class EventController extends Controller {
         }
         return response(['msg' => 'Failed to delete event', 'status' => 'failed']);
     }
+    
+    /**
+     * update event positions
+     * @param Request $request
+     */
+    public function changePosition(Request $request){
 
+        if ($request->ajax()) {
+            $Event = new Event();
+            $Event->updatePositions($request->all()["positions"]);
+        }
+        else{
+            abort(404);
+        }
+    }
+    
     /**
      * Check for validation errors
      * @param $request

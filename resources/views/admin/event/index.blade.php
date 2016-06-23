@@ -15,32 +15,28 @@
 
 
 <div id="hidden_form" class="hidden">
+    <div class="event_item">
+        <h3>
+            <span class="event_title title_20000">Create new event</span>
+            <button data-id="0" class="btn btn-danger pull-right delete_event">
+                Delete<i class="fa fa-trash"></i>
+            </button>
+        </h3>
+        <div>
+            {!! Form::open(['method' => 'POST',
+            'name' => 'frm_update_event', 
+            'route' => ['storeEvent'],
+            'class' => 'form-horizontal',
+            'data-index' => 20000
+            ]) !!}
 
-    <h3>
-        <span class="event_title title_20000">Create new event</span>
-        <button data-id="0" class="btn btn-danger pull-right delete_event">
-            Delete<i class="fa fa-trash"></i>
-        </button>
-    </h3>
-    <div>
+            @include('admin.event.includes.form',
+            ['submitButtonText'  => 'Save'
+            ])
 
-
-
-        {!! Form::open([
-        'method' => 'POST',
-        'name' => 'frm_update_event', 
-        'route' => ['storeEvent'],
-        'class' => 'form-horizontal',
-        'data-index' => 20000
-        ]) !!}
-
-        @include('admin.event.includes.form',
-        ['submitButtonText'  => 'Save'
-        ])
-
-        {!! Form::close() !!}
+            {!! Form::close() !!}
+        </div>
     </div>
-
 </div>
 
 <div class="hidden">
@@ -63,11 +59,35 @@
         addAccordion();
     });
 
-    function addAccordion(){
-        $("#accordion").accordion({
-            collapsible: true,
-            active: false
-        });
+    function addAccordion() {
+//        $("#accordion").accordion({
+//            collapsible: true,
+//            active: false
+//        });
+
+        $("#accordion")
+                .accordion({
+                    header: "> div > h3",
+                    collapsible: true,
+                    active: false
+                })
+                .sortable({
+                    axis: "y",
+                    handle: "h3",
+                    connectWith: "#accordion",
+                    stop: function (event, ui) {
+                        // IE doesn't register the blur when sorting
+                        // so trigger focusout handlers to remove .ui-state-focus
+                        ui.item.children("h3").triggerHandler("focusout");
+
+//                        $(this).accordion( "option", "active", false );
+                        // Refresh accordion to handle new order
+                        $(this).accordion("refresh");
+                        // apply change position
+                         ajaxChangePosition();
+                    }
+                });
+
     }
     $("#all_events").on("submit", "form[name=frm_update_event]", function (e) {
         e.preventDefault();
@@ -121,7 +141,8 @@
         ajaxCaller($(this));
         return false;
     }); // end create event click event
-
+    
+    // display confirm delete box
     function confirmDelete(msgText, frmCaller, isSaved) {
 
         $("#dialog-confirm").find(".modal_warning_text").html(msgText);
@@ -148,6 +169,7 @@
         });
     }
 
+    // submit form
     function ajaxCaller(frmCaller) {
 
         var url = frmCaller.attr("action");
@@ -201,8 +223,8 @@
             }
         });
     }
-
-
+    
+    // refresh page content
     function ajaxRefreshPage(message) {
 
         var selSuccessMessage = $("#alert_messages .alert-success .content");
@@ -231,6 +253,32 @@
             complete: function () {
                 addAccordion();
                 $("#accordion").accordion("refresh");
+            }
+        });
+    }
+    
+    // apply change position
+    function ajaxChangePosition(){
+
+        var arrSection = [];
+
+        $( "#accordion .event_item" ).each(function( index ) {
+
+            arrSection.push({
+                'event_id':$(this).find("input[name=id]").val(),
+                'position': index + 1
+            });
+        });
+
+        $.ajax({
+            url: "{!! route('changeEventPosition') !!}",
+            type: 'POST',
+            headers:{ 'X-CSRF-Token': '{{ Session::token() }}' },
+            data: {'positions': arrSection},
+            success: function() {
+            },
+            error: function() {
+
             }
         });
     }
