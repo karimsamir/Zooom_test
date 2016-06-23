@@ -36,11 +36,18 @@ class EventController extends Controller {
         // get all categories to be displayed in ddl
         $categories = Category::getAllCategories();
 
-        return view("admin.event.index", [
+        $view_variables = array(
             "events" => $events,
             "countries" => $countries,
-            "categories" => $categories
-        ]);
+            "categories" => $categories);
+        
+        if ($request->ajax()) {
+
+            return view("admin.event.includes.ajaxIndex", $view_variables);
+        } 
+        else {
+            return view("admin.event.index", $view_variables);
+        }
     }
 
     /**
@@ -85,7 +92,6 @@ class EventController extends Controller {
 
     /**
      * Show the form for editing the specified resource.
-     *
      * @param Request $request
      * @param  int  $id
      * @return Response edit view
@@ -107,11 +113,11 @@ class EventController extends Controller {
 
         if ($request->ajax()) {
 
-            return view($this->view_path . "includes.ajaxIndex", $view_variables);
+            return view("admin.event.includes.ajaxIndex", $view_variables);
         } else {
 
             if (count($events) > 0) {
-                return view($this->view_path . "edit", $view_variables);
+                return view("admin.event.edit", $view_variables);
             } else {
                 return redirect(route("createEvent"));
             }
@@ -165,7 +171,7 @@ class EventController extends Controller {
     }
 
     /**
-     * Remove the event.
+     * Remove event.
      * @param  int  $id
      * @return json response
      */

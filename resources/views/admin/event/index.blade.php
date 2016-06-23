@@ -45,14 +45,14 @@
 
 <div class="hidden">
     <div id="dialog-confirm" title="Are you sure?">
-    <p>
-        <span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>
-        <span class="modal_warning_text">
-            This item will be permanently deleted and cannot be recovered. Are you sure?
-        </span>
-    </p>
-</div>
-    
+        <p>
+            <span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>
+            <span class="modal_warning_text">
+                This item will be permanently deleted and cannot be recovered. Are you sure?
+            </span>
+        </p>
+    </div>
+
 </div>
 
 
@@ -60,13 +60,15 @@
 <link rel="stylesheet" type="text/css" href="{{ asset('bower_components/jquery-ui/themes/base/all.css') }}"/>
 <script>
     $(function () {
-        $("#accordion").accordion({
-            collapsible: true,
-            active: false,
-//             header: ".edit_event"
-        });
+        addAccordion();
     });
 
+    function addAccordion(){
+        $("#accordion").accordion({
+            collapsible: true,
+            active: false
+        });
+    }
     $("#all_events").on("submit", "form[name=frm_update_event]", function (e) {
         e.preventDefault();
         ajaxCaller($(this));
@@ -122,8 +124,6 @@
 
     function confirmDelete(msgText, frmCaller, isSaved) {
 
-        var original_text = $("#dialog-confirm").find(".modal_warning_text").html();
-
         $("#dialog-confirm").find(".modal_warning_text").html(msgText);
 
         $("#dialog-confirm").dialog({
@@ -139,7 +139,7 @@
                         $(".to_be_deleted").remove();
                     }
                     $(this).dialog("close");
-                    $("#dialog-confirm").find(".modal_warning_text").html(original_text);
+                    $("#dialog-confirm").find(".modal_warning_text").html("");
                 },
                 Cancel: function () {
                     $(this).dialog("close");
@@ -175,15 +175,7 @@
                     selSuccessMessageContainer.fadeIn(200);
 
                     // in case of success only
-                    if (frmName == "frm_delete_event") {
-                        // remove the deleted event div
-                        $(".to_be_deleted").remove();
-                    } else if (frmName == "frm_create_event") {
-                        ajaxRefreshPage(retData.msg);
-                    } else if (frmName == "frm_update_event") {
-                        // show event title from form input    
-                        $(".title_" + frmCaller.attr("data-index")).html(frmCaller.find("input[name=title]").val())
-                    }
+                    ajaxRefreshPage(retData.msg);
 
                 } else {
 
@@ -201,21 +193,11 @@
                     } else {
                         selFailMessage.html(retData.msg);
                     }
-
-
-                    if (frmName == "frm_delete_event") {
-                        $(".to_be_deleted").removeClass("to_be_deleted");
-                    }
                 }
             },
             error: function (retData) {
                 selFailMessage.html("Error , Please try again later");
                 selFailMessageContainer.fadeIn(200);
-
-                if (frmName == "frm_delete_event") {
-                    $(".to_be_deleted").removeClass("to_be_deleted");
-                }
-
             }
         });
     }
@@ -247,8 +229,8 @@
                 selFailMessageContainer.fadeIn(200);
             },
             complete: function () {
-                // activate sorting
-                activateSorting();
+                addAccordion();
+                $("#accordion").accordion("refresh");
             }
         });
     }
