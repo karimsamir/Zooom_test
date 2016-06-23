@@ -1,6 +1,19 @@
 @include('errors.list')
 
 <div class="form-group">
+    {!! Form::label('title', 'Title', array('class' => 'col-sm-2 control-label')) !!}
+    <div class="col-sm-10">
+        {!! Form::text('title', null, [
+        'class' => 'form-control',
+        'placeholder' => 'Enter event title'
+        ]) !!}
+    </div>
+    @if ($errors->has('title'))
+    <p class="help-block alert alert-danger">{{ $errors->first('title') }}</p>
+    @endif
+</div>
+
+<div class="form-group">
     {!! Form::label('country', 'Country', array('class' => 'col-sm-2 control-label')) !!}
     <div class="col-sm-10">
         {!! Form::select('country_id', $countries, null, [
@@ -21,19 +34,6 @@
     </div>
     @if ($errors->has('category_id'))
     <p class="help-block alert alert-danger">{{ $errors->first('category_id') }}</p>
-    @endif
-</div>
-
-<div class="form-group">
-    {!! Form::label('title', 'Title', array('class' => 'col-sm-2 control-label')) !!}
-    <div class="col-sm-10">
-        {!! Form::text('title', null, [
-        'class' => 'form-control',
-        'placeholder' => 'Enter event title'
-        ]) !!}
-    </div>
-    @if ($errors->has('title'))
-    <p class="help-block alert alert-danger">{{ $errors->first('title') }}</p>
     @endif
 </div>
 

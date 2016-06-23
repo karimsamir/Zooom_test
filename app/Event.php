@@ -17,8 +17,8 @@ class Event extends Model {
         'latitude',
         'zip',
         'description',
-        'startdate',
-        'enddate'
+        'start_date',
+        'end_date'
     ];
 
     public function country() {

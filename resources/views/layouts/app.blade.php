@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Laravel</title>
+    <title>Zooom Test</title>
 
     <!-- Fonts -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css" integrity="sha384-XdYbMnZ/QjLh6iI4ogqCTaIjrFk87ip+ekIjefZch0Y+PvJ8CDYtEs1ipDmPorQ+" crossorigin="anonymous">
@@ -72,7 +72,26 @@
             </div>
         </div>
     </nav>
-
+        
+    <div id="alert_messages">
+        <div class="alert alert-success" style="margin-top:1em; display:none;">
+            <button type="button" class="close" data-dismiss="alert">
+                <span aria-hidden="true">&times;</span>
+                <span class="sr-only">Close</span>
+            </button>
+            <span>
+                <strong class="content"></strong> 
+            </span>
+        </div>
+        <div class="alert alert-danger" style="margin-top:1em; display:none;">
+            <button type="button" class="close" data-dismiss="alert">
+                <span aria-hidden="true">&times;</span>
+                <span class="sr-only">Close</span>
+            </button>
+            <span class="content"></span>
+        </div>
+    </div>
+    
     @yield('content')
 
     <!-- JavaScripts -->
