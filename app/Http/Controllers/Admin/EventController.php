@@ -91,40 +91,6 @@ class EventController extends Controller {
     }
 
     /**
-     * Show the form for editing the specified resource.
-     * @param Request $request
-     * @param  int  $id
-     * @return Response edit view
-     */
-    public function edit(Request $request, $id) {
-
-        // get all countries to be displayed in ddl
-        $countries = Country::getAllCountries();
-        // get all categories to be displayed in ddl
-        $categories = Category::getAllCategories();
-
-        // get all events ordered by position
-        $events = Event::all();
-
-        $view_variables = array(
-            "events" => $events,
-            "countries" => $countries,
-            "categories" => $categories);
-
-        if ($request->ajax()) {
-
-            return view("admin.event.includes.ajaxIndex", $view_variables);
-        } else {
-
-            if (count($events) > 0) {
-                return view("admin.event.edit", $view_variables);
-            } else {
-                return redirect(route("createEvent"));
-            }
-        }
-    }
-
-    /**
      * Update the event event and redirect to event list page
      *
      * @param Request $request
