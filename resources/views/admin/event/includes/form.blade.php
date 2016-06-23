@@ -1,10 +1,5 @@
 @include('errors.list')
 
-<!--<div class="col-md-6">-->
-<!--<div class="row form-inline">-->
-
-{!! Form::hidden('event_id', null) !!}
-
 <div class="form-group">
     {!! Form::label('country', 'Country', array('class' => 'col-sm-2 control-label')) !!}
     <div class="col-sm-10">
@@ -49,7 +44,6 @@
     ]) !!}
 </div>
 
-
 <div class="form-group">
     {!! Form::label('location', 'Location', array('class' => 'col-sm-2 control-label')) !!}
     <div class="col-sm-10">
@@ -60,6 +54,45 @@
     </div>
     @if ($errors->has('location'))
     <p class="help-block alert alert-danger">{{ $errors->first('location') }}</p>
+    @endif
+</div>
+
+<div class="form-group">
+    {!! Form::label('zip', 'Zip', array('class' => 'col-sm-2 control-label')) !!}
+    <div class="col-sm-10">
+        {!! Form::text('zip', null, [
+        'class' => 'form-control',
+        'placeholder' => 'Enter event zip'
+        ]) !!}
+    </div>
+    @if ($errors->has('zip'))
+    <p class="help-block alert alert-danger">{{ $errors->first('zip') }}</p>
+    @endif
+</div>
+
+<div class="form-group">
+    {!! Form::label('latitude', 'Latitude', array('class' => 'col-sm-2 control-label')) !!}
+    <div class="col-sm-10">
+        {!! Form::text('latitude', null, [
+        'class' => 'form-control',
+        'placeholder' => 'Enter event latitude'
+        ]) !!}
+    </div>
+    @if ($errors->has('latitude'))
+    <p class="help-block alert alert-danger">{{ $errors->first('latitude') }}</p>
+    @endif
+</div>
+
+<div class="form-group">
+    {!! Form::label('longitude', 'Longitude', array('class' => 'col-sm-2 control-label')) !!}
+    <div class="col-sm-10">
+        {!! Form::text('longitude', null, [
+        'class' => 'form-control',
+        'placeholder' => 'Enter event longitude'
+        ]) !!}
+    </div>
+    @if ($errors->has('longitude'))
+    <p class="help-block alert alert-danger">{{ $errors->first('longitude') }}</p>
     @endif
 </div>
 
@@ -90,7 +123,6 @@
 </div>
 
 <hr>
-<!--</div>-->
 
 <div class="col-md-12">
     {!! Form::submit($submitButtonText, ['class' => 'btn btn-success pull-right']) !!}
