@@ -3,7 +3,25 @@
         
         <div id="accordion">
             @foreach($events as $key => $event)
-                <h3 class="event_title title_{{$key}}">{{$event->title}}</h3>
+               
+                <h3>
+                    <span class="event_title title_{{$key}}">{{$event->title}}</span>
+
+                    {!! Form::open([
+                        'method' => 'DELETE',
+                        'name' => 'frm_delete_event',
+                        'route' => ['deleteEvent', $event->id]]) !!}
+
+                        {!! Form::button( 'Delete<i class="fa fa-trash fa-lg"></i>', 
+                        ['type' => 'submit',
+                        'class' => 'btn btn-danger pull-right delete_event', 
+                        'data-id' => $event->id] ) !!}
+                        
+                        {!! Form::hidden( 'event_title', $event->title ) !!}
+                        
+                    {!! Form::close() !!}
+                </h3>
+
                 <div>
                     {!! Form::model($event, [
                     'method' => 'PUT',
