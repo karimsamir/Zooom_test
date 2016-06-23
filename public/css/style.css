@@ -1,1 +1,7 @@
-.modal-footer {   border-top: 0px; }
+.delete_event {
+    font-size: 10px !important;
+    margin-top: -23px;
+}
+.delete_event i{
+    padding-left: 3px;
+}
