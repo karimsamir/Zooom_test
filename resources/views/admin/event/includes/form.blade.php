@@ -6,6 +6,7 @@
     {!! Form::label('title', 'Title', array('class' => 'col-sm-2 control-label')) !!}
     <div class="col-sm-10">
         {!! Form::text('title', null, [
+        'id' => 'title_' . $key,
         'class' => 'form-control',
         'placeholder' => 'Enter event title'
         ]) !!}
@@ -19,6 +20,7 @@
     {!! Form::label('country', 'Country', array('class' => 'col-sm-2 control-label')) !!}
     <div class="col-sm-10">
         {!! Form::select('country_id', $countries, null, [
+        'id' => 'country_id_' . $key,
         'placeholder' => 'Select',
         'class' => 'form-control']) !!}
     </div>
@@ -31,6 +33,7 @@
     {!! Form::label('category', 'Category', array('class' => 'col-sm-2 control-label')) !!}
     <div class="col-sm-10">
         {!! Form::select('category_id', $categories, null, [
+        'id' => 'category_id_' . $key,
         'placeholder' => 'Select',
         'class' => 'form-control']) !!}
     </div>
@@ -42,7 +45,7 @@
 <div class="form-group">
     {!! Form::label('description', 'Description', array('class' => 'col-sm-2 control-label')) !!}
     {!! Form::textarea('description', null, [
-
+        'id' => 'description_' . $key,
     ]) !!}
 </div>
 
@@ -50,6 +53,7 @@
     {!! Form::label('location', 'Location', array('class' => 'col-sm-2 control-label')) !!}
     <div class="col-sm-10">
         {!! Form::text('location', null, [
+        'id' => 'location_' . $key,
         'class' => 'form-control',
         'placeholder' => 'Enter event location'
         ]) !!}
@@ -63,6 +67,7 @@
     {!! Form::label('zip', 'Zip', array('class' => 'col-sm-2 control-label')) !!}
     <div class="col-sm-10">
         {!! Form::text('zip', null, [
+        'id' => 'zip_' . $key,
         'class' => 'form-control',
         'placeholder' => 'Enter event zip'
         ]) !!}
@@ -76,6 +81,7 @@
     {!! Form::label('latitude', 'Latitude', array('class' => 'col-sm-2 control-label')) !!}
     <div class="col-sm-10">
         {!! Form::text('latitude', null, [
+        'id' => 'latitude_' . $key,
         'class' => 'form-control',
         'placeholder' => 'Enter event latitude'
         ]) !!}
@@ -89,6 +95,7 @@
     {!! Form::label('longitude', 'Longitude', array('class' => 'col-sm-2 control-label')) !!}
     <div class="col-sm-10">
         {!! Form::text('longitude', null, [
+        'id' => 'longitude_' . $key,
         'class' => 'form-control',
         'placeholder' => 'Enter event longitude'
         ]) !!}
@@ -102,7 +109,8 @@
     {!! Form::label('start_date', 'Start date', array('class' => 'col-sm-2 control-label')) !!}
     <div class="col-sm-10">
         {!! Form::date('start_date', null, [
-        'class' => 'form-control',
+        'id' => 'start_date_' . $key,
+        'class' => 'form-control datepicker',
         'placeholder' => 'Enter event start date'
         ]) !!}
     </div>
@@ -115,7 +123,8 @@
     {!! Form::label('end_date', 'End date', array('class' => 'col-sm-2 control-label')) !!}
     <div class="col-sm-10">
         {!! Form::date('end_date', null, [
-        'class' => 'form-control',
+        'id' => 'end_date_' . $key,
+        'class' => 'form-control datepicker',
         'placeholder' => 'Enter event end date'
         ]) !!}
     </div>
