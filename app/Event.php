@@ -31,11 +31,11 @@ class Event extends Model {
     }
 
     public function getStartDateAttribute() {
-        return Carbon::parse($this->attributes['start_date'])->format('Y-m-d');
+        return Carbon::parse($this->attributes['start_date'])->format('d-m-Y');
     }
 
     public function getEndDateAttribute() {
-        return Carbon::parse($this->attributes['end_date'])->format('Y-m-d');
+        return Carbon::parse($this->attributes['end_date'])->format('d-m-Y');
     }
  
     /**

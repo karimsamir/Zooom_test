@@ -103,10 +103,8 @@
     
     <script type="text/javascript" src="{{ asset('bower_components/jquery/dist/jquery.min.js')}}"></script>
     <script type="text/javascript" src="{{ asset('bower_components/jquery-ui/jquery-ui.min.js')}}"></script>
-    <!--<script type="text/javascript" src="{{ asset('bower_components/bootstrap/dist/js/jquery.min.js')}}"></script>-->
     
     
-
     {{-- <script src="{{ elixir('js/app.js') }}"></script> --}}
 
 @stack('scripts')

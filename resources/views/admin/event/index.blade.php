@@ -31,7 +31,8 @@
             ]) !!}
 
             @include('admin.event.includes.form',
-            ['submitButtonText'  => 'Save'
+            ['submitButtonText'  => 'Save',
+            'key'   => 20000
             ])
 
             {!! Form::close() !!}
@@ -55,15 +56,13 @@
 @push('scripts')
 <link rel="stylesheet" type="text/css" href="{{ asset('bower_components/jquery-ui/themes/base/all.css') }}"/>
 <script>
+
+
     $(function () {
         addAccordion();
     });
 
     function addAccordion() {
-//        $("#accordion").accordion({
-//            collapsible: true,
-//            active: false
-//        });
 
         $("#accordion")
                 .accordion({
@@ -84,11 +83,20 @@
                         // Refresh accordion to handle new order
                         $(this).accordion("refresh");
                         // apply change position
-                         ajaxChangePosition();
+                        ajaxChangePosition();
                     }
                 });
 
     }
+
+    // apply datepicker to all datepickers
+    $("#all_events").on("focus",".datepicker",function(){
+       $(this).datepicker({
+            changeMonth: true,
+            changeYear: true,
+            dateFormat: "dd-mm-yy"
+        }); 
+    });
     $("#all_events").on("submit", "form[name=frm_update_event]", function (e) {
         e.preventDefault();
         ajaxCaller($(this));
@@ -141,7 +149,7 @@
         ajaxCaller($(this));
         return false;
     }); // end create event click event
-    
+
     // display confirm delete box
     function confirmDelete(msgText, frmCaller, isSaved) {
 
@@ -223,7 +231,7 @@
             }
         });
     }
-    
+
     // refresh page content
     function ajaxRefreshPage(message) {
 
@@ -256,16 +264,16 @@
             }
         });
     }
-    
+
     // apply change position
-    function ajaxChangePosition(){
+    function ajaxChangePosition() {
 
         var arrSection = [];
 
-        $( "#accordion .event_item" ).each(function( index ) {
+        $("#accordion .event_item").each(function (index) {
 
             arrSection.push({
-                'event_id':$(this).find("input[name=id]").val(),
+                'event_id': $(this).find("input[name=id]").val(),
                 'position': index + 1
             });
         });
@@ -273,11 +281,11 @@
         $.ajax({
             url: "{!! route('changeEventPosition') !!}",
             type: 'POST',
-            headers:{ 'X-CSRF-Token': '{{ Session::token() }}' },
+            headers: {'X-CSRF-Token': '{{ Session::token() }}'},
             data: {'positions': arrSection},
-            success: function() {
+            success: function () {
             },
-            error: function() {
+            error: function () {
 
             }
         });

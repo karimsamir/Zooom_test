@@ -11,6 +11,7 @@ use Validator;
 use App\Event;
 use App\Country;
 use App\Category;
+use Carbon\Carbon;
 
 class EventController extends Controller {
 
@@ -71,10 +72,16 @@ class EventController extends Controller {
                                 ->withErrors($validator)
                                 ->withInput();
             }
-        } else {
+        } 
+        else {
+            
+            $inputs = $request->all();
+            
+            $inputs["start_date"] = Carbon::createFromFormat('d-m-Y', $inputs["start_date"])->format('Y-m-d');
+            $inputs["end_date"] = Carbon::createFromFormat('d-m-Y',$inputs["end_date"])->format('Y-m-d');
 
             // save new event to DB
-            Event::create($request->all());
+            Event::create($inputs);
 
             if ($request->ajax()) {
 
@@ -110,7 +117,10 @@ class EventController extends Controller {
                     'msg' => $validator->getMessageBag()->toArray()
                 );
             } else {
-
+                
+                $start_date = Carbon::createFromFormat('d-m-Y', $inputs["start_date"])->format('Y-m-d');
+                $end_date = Carbon::createFromFormat('d-m-Y',$inputs["end_date"])->format('Y-m-d');
+                
                 Event::where("id", $id)->update([
                     'country_id' => $inputs["country_id"],
                     'category_id' => $inputs["category_id"],
@@ -120,8 +130,8 @@ class EventController extends Controller {
                     'latitude' => $inputs["latitude"],
                     'zip' => $inputs["zip"],
                     'description' => $inputs["description"],
-                    'start_date' => $inputs["start_date"],
-                    'end_date' => $inputs["end_date"],
+                    'start_date' => $start_date,
+                    'end_date' => $end_date,
                 ]);
 
                 $arr_result = array(

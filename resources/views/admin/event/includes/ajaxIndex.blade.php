@@ -5,7 +5,12 @@
             @foreach($events as $key => $event)
             <div class="event_item">
                 <h3>
-                    <span class="event_title title_{{$key}}">{{$event->title}}</span>
+                    <span class="event_title title_{{$key}}">
+                        {{$event->title}} / 
+                        {{$event->country->country_code}} / 
+                        {{$event->start_date}} / 
+                        {{$event->end_date}}
+                    </span>
 
                     {!! Form::open([
                         'method' => 'DELETE',
@@ -32,7 +37,8 @@
                     ]) !!}
 
                         @include('admin.event.includes.form',
-                        ['submitButtonText'  => 'Save'
+                        ['submitButtonText'  => 'Save',
+                        'key'   => $key
                         ])
 
                 {!! Form::close() !!}
