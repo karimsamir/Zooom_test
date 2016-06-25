@@ -63,6 +63,10 @@
     @endif
 </div>
 
+<div class="form-group map_container">
+    <div class="map_canvas"></div>
+</div>
+
 <div class="form-group">
     {!! Form::label('zip', 'Zip', array('class' => 'col-sm-2 control-label')) !!}
     <div class="col-sm-10">

@@ -13,7 +13,7 @@
 
     <!-- Styles -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
-    
+    <link rel="stylesheet" type="text/css" href="{{ asset('bower_components/jquery-ui/themes/base/all.css') }}"/>
     {{-- <link href="{{ elixir('css/app.css') }}" rel="stylesheet"> --}}
 
     <link rel="stylesheet" type="text/css" id="theme" href="{{ asset('/css/style.css') }}"/>
@@ -98,9 +98,19 @@
     @yield('content')
 
     <!-- JavaScripts -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.3/jquery.min.js" integrity="sha384-I6F5OKECLVtK/BL+8iSLDEHowSAfUo76ZL9+kGAgTRdiByINKJaqTPH/QVNS1VDb" crossorigin="anonymous"></script>    
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js" integrity="sha384-I6F5OKECLVtK/BL+8iSLDEHowSAfUo76ZL9+kGAgTRdiByINKJaqTPH/QVNS1VDb" crossorigin="anonymous"></script>    
-    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>-->
+    <script src="//code.jquery.com/jquery-2.2.3.min.js"></script>    
+    <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js" ></script>    
+    
+    
+    
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC8cZEQ4NUtn43xVU8eZa-xQtGlo1t3p9Y&libraries=places"
+        async defer></script>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script> -->
+    
+    
+<!--    <script type="text/javascript" src="{{ asset('bower_components/jquery/dist/jquery.min.js')}}"></script>
+     <script type="text/javascript" src="{{ asset('bower_components/jquery-ui/jquery-ui.min.js')}}"></script>-->
+    
     
     {{-- <script src="{{ elixir('js/app.js') }}"></script> --}}
 

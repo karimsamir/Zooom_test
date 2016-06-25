@@ -19,7 +19,8 @@ class Event extends Model {
         'zip',
         'description',
         'start_date',
-        'end_date'
+        'end_date',
+        'position'
     ];
 
     public function country() {

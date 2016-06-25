@@ -31,7 +31,7 @@ class EventController extends Controller {
      */
     public function index(Request $request) {
 
-        $events = Event::all();
+        $events = Event::orderBy('position')->get();
         // get all countries to be displayed in ddl
         $countries = Country::getAllCountries();
         // get all categories to be displayed in ddl
@@ -80,6 +80,9 @@ class EventController extends Controller {
             $inputs["start_date"] = Carbon::createFromFormat('d-m-Y', $inputs["start_date"])->format('Y-m-d');
             $inputs["end_date"] = Carbon::createFromFormat('d-m-Y',$inputs["end_date"])->format('Y-m-d');
 
+            $last_event_position = Event::all()->max('position');
+//            die(var_dump($last_event_position));
+            $inputs["position"] = $last_event_position +1;
             // save new event to DB
             Event::create($inputs);
 

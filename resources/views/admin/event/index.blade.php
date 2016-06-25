@@ -54,12 +54,15 @@
 
 
 @push('scripts')
-<link rel="stylesheet" type="text/css" href="{{ asset('bower_components/jquery-ui/themes/base/all.css') }}"/>
+
+<script type="text/javascript" src="{{ asset('js/map.js')}}"></script>
+
 <script>
 
 
     $(function () {
         addAccordion();
+
     });
 
     function addAccordion() {
@@ -88,7 +91,23 @@
                 });
 
     }
+    
+    // show map on activation
+    $( "#accordion" ).on( "accordionactivate", function( event, ui ) {
+//        $("#map_canvas").remove();
+        console.info(ui.newPanel.find("input[name=title]").val());
+//        ui.newPanel.find(".map_container").html("sdsdsdsd");
+//        ui.newPanel.find(".map_container").append( '<div id="map_canvas"></div>' );
+        var lat = ui.newPanel.find("input[name=latitude]").val();
+        var lng = ui.newPanel.find("input[name=longitude]").val();
+        
+        console.info("lat=="+lat+":::lng=="+lng+":::");
+        
+        initMap(lat, lng, ui.newPanel);
 
+        
+    });
+    
     // apply datepicker to all datepickers
     $("#all_events").on("focus",".datepicker",function(){
        $(this).datepicker({
@@ -97,6 +116,7 @@
             dateFormat: "dd-mm-yy"
         }); 
     });
+    
     $("#all_events").on("submit", "form[name=frm_update_event]", function (e) {
         e.preventDefault();
         ajaxCaller($(this));
@@ -139,8 +159,6 @@
         $('html,body').animate({
             scrollTop: $(".title_20000").offset().top},
                 'slow');
-
-        $(this).hide();
     });
 
     $("#all_events").on("submit", "form[name=frm_create_event]", function (e) {
