@@ -7,24 +7,24 @@
 function initMap(lat, lng, container_div) {
 
 
-console.warn("lat=="+lat+":::lng=="+lng+":::");
+    console.warn("lat==" + lat + ":::lng==" + lng + ":::");
 
 //    var map = new google.maps.Map(document.getElementById("map_canvas"), {
 //        center: {lat: parseFloat(lat), lng: parseFloat(lng)},
 //        zoom: 13
 //    });
     var div_map = container_div.find(".map_canvas")[0];
-    
+
     var map = new google.maps.Map(div_map, {
         center: {lat: parseFloat(lat), lng: parseFloat(lng)},
         zoom: 13
     });
 
-    var types = [];
+//    var types = [];
 
 //    map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
 //    map.controls[google.maps.ControlPosition.TOP_LEFT].push(types);
-    
+
 //    var input = document.getElementById(input_id);
     var input = container_div.find("input[name=location]")[0];
 //    console.log("valll==" + $(input).val() + ":::");
@@ -33,7 +33,7 @@ console.warn("lat=="+lat+":::lng=="+lng+":::");
     autocomplete.bindTo('bounds', map);
 
     var infowindow = new google.maps.InfoWindow();
-    
+
     var marker = new google.maps.Marker({
         map: map,
         anchorPoint: new google.maps.Point(0, -29)
@@ -56,16 +56,6 @@ console.warn("lat=="+lat+":::lng=="+lng+":::");
             map.setCenter(place.geometry.location);
             map.setZoom(17);  // Why 17? Because it looks good.
         }
-        
-        marker.setIcon(/** @type {google.maps.Icon} */({
-            url: place.icon,
-            size: new google.maps.Size(71, 71),
-            origin: new google.maps.Point(0, 0),
-            anchor: new google.maps.Point(17, 34),
-            scaledSize: new google.maps.Size(35, 35)
-        }));
-        marker.setPosition(place.geometry.location);
-        marker.setVisible(true);
 
         var address = '';
         if (place.address_components) {
@@ -75,6 +65,34 @@ console.warn("lat=="+lat+":::lng=="+lng+":::");
                 (place.address_components[2] && place.address_components[2].short_name || '')
             ].join(' ');
         }
+
+        // set zip code in form
+        var address_components = place.address_components;
+        
+        for (i = 0; i < address_components.length; i++) { 
+            if(address_components[i]["types"] == "postal_code"){
+               container_div.find("input[name=zip]").val(address_components[i]["long_name"]); 
+            }
+        }
+        
+        // change lat lng in form
+        container_div.find("input[name=latitude]").val(place.geometry.location.lat());
+        container_div.find("input[name=longitude]").val(place.geometry.location.lng());
+        
+        marker.setIcon(/** @type {google.maps.Icon} */({
+            url: place.icon,
+            size: new google.maps.Size(71, 71),
+            origin: new google.maps.Point(0, 0),
+            anchor: new google.maps.Point(17, 34),
+            scaledSize: new google.maps.Size(35, 35)
+        }));
+
+        marker.setPosition(place.geometry.location);
+
+        console.info(place.address_components);
+        console.debug(place);
+
+        marker.setVisible(true);
 
         infowindow.setContent('<div><strong>' + place.name + '</strong><br>' + address);
         infowindow.open(map, marker);
