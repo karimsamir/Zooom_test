@@ -1,7 +1,3 @@
-// This example requires the Places library. Include the libraries=places
-// parameter when you first load the API. For example:
-// <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places">
-
 var map = null;
 var marker = null;
 var infowindow = null;
@@ -36,24 +32,17 @@ function initMap(lat, lng, container_div) {
 
     geocoder = new google.maps.Geocoder;
 
-
     autocomplete.addListener('place_changed', function () {
         infowindow.close();
         marker.setVisible(false);
         var place = autocomplete.getPlace();
-        
-        placeChanged(place, container_div, false);
-        
 
+        placeChanged(place, container_div, false);
     });
 
+    // marker dragged event
     marker.addListener('dragend', function () {
-        console.log("marker dragged");
-        map.setZoom(8);
-        map.setCenter(marker.getPosition());
-
         geocodeLatLng(marker.getPosition(), container_div);
-
     });
 }
 
@@ -61,16 +50,9 @@ function geocodeLatLng(latlng, container_div) {
 
     geocoder.geocode({'location': latlng}, function (results, status) {
         if (status === google.maps.GeocoderStatus.OK) {
-            if (results[1]) {
-//                map.setZoom(11);
-//                var marker = new google.maps.Marker({
-//                    position: latlng,
-//                    map: map
-//                });
-//                infowindow.setContent(results[1].formatted_address);
-//                infowindow.open(map, marker);
-console.info(results[0]);
-        placeChanged(results[0], container_div, true);
+            if (results[0]) {
+
+                placeChanged(results[0], container_div, true);
             } else {
                 window.alert('No results found');
             }
@@ -81,17 +63,17 @@ console.info(results[0]);
 }
 
 function placeChanged(place, container_div, marker_dragged) {
-//    if (!place.geometry) {
-//        window.alert("Autocomplete's returned place contains no geometry");
-//        return;
-//    }
+    if (!place.geometry) {
+        window.alert("Autocomplete's returned place contains no geometry");
+        return;
+    }
 
     // If the place has a geometry, then present it on a map.
     if (place.geometry.viewport) {
         map.fitBounds(place.geometry.viewport);
     } else {
         map.setCenter(place.geometry.location);
-        map.setZoom(17);  // Why 17? Because it looks good.
+        map.setZoom(17);
     }
 
     var address = '';
@@ -103,15 +85,14 @@ function placeChanged(place, container_div, marker_dragged) {
         ].join(' ');
     }
 
-    if (marker_dragged){
-        console.log("formatted_address=="+place.formatted_address+":::");
+    // if marker dragged change address in location input field
+    if (marker_dragged) {
         container_div.find("input[name=location]").val(place.formatted_address);
     }
-    // set zip code in form
+
+    //get address components
     var address_components = place.address_components;
-
-console.debug(container_div);
-
+    // set zip code in form
     for (i = 0; i < address_components.length; i++) {
         if (address_components[i]["types"] == "postal_code") {
             container_div.find("input[name=zip]").val(address_components[i]["long_name"]);
@@ -124,11 +105,11 @@ console.debug(container_div);
 
     // show place marker
     var place_name = "";
-    if (!marker_dragged){
-       place_name = '<div><strong>' + place.name + '</strong><br>';
+    if (!marker_dragged) {
+        place_name = '<div><strong>' + place.name + '</strong><br>';
     }
-    
-    if(!marker_dragged){
+
+    if (!marker_dragged) {
         marker.setIcon(/** @type {google.maps.Icon} */({
             url: place.icon,
             size: new google.maps.Size(71, 71),
@@ -137,7 +118,7 @@ console.debug(container_div);
             scaledSize: new google.maps.Size(35, 35)
         }));
     }
-    
+
     // change marker position
     marker.setPosition(place.geometry.location);
     // show marker

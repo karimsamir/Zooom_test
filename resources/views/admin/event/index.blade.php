@@ -94,18 +94,11 @@
     
     // show map on activation
     $( "#accordion" ).on( "accordionactivate", function( event, ui ) {
-//        $("#map_canvas").remove();
-        console.info(ui.newPanel.find("input[name=title]").val());
-//        ui.newPanel.find(".map_container").html("sdsdsdsd");
-//        ui.newPanel.find(".map_container").append( '<div id="map_canvas"></div>' );
+
         var lat = ui.newPanel.find("input[name=latitude]").val();
         var lng = ui.newPanel.find("input[name=longitude]").val();
-        
-        console.info("lat=="+lat+":::lng=="+lng+":::");
-        
+        // show map
         initMap(lat, lng, ui.newPanel);
-
-        
     });
     
     // apply datepicker to all datepickers
