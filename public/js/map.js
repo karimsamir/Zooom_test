@@ -6,40 +6,31 @@
 
 function initMap(lat, lng, container_div) {
 
-
-    console.warn("lat==" + lat + ":::lng==" + lng + ":::");
-
-//    var map = new google.maps.Map(document.getElementById("map_canvas"), {
-//        center: {lat: parseFloat(lat), lng: parseFloat(lng)},
-//        zoom: 13
-//    });
     var div_map = container_div.find(".map_canvas")[0];
+    var latlng = new google.maps.LatLng(parseFloat(lat), parseFloat(lng));
 
-    var map = new google.maps.Map(div_map, {
-        center: {lat: parseFloat(lat), lng: parseFloat(lng)},
-        zoom: 13
-    });
+    var mapOptions = {
+        zoom: 13,
+        center: latlng
+    }
 
-//    var types = [];
+    var map = new google.maps.Map(div_map, mapOptions);
 
-//    map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
-//    map.controls[google.maps.ControlPosition.TOP_LEFT].push(types);
-
-//    var input = document.getElementById(input_id);
     var input = container_div.find("input[name=location]")[0];
-//    console.log("valll==" + $(input).val() + ":::");
+
     var autocomplete = new google.maps.places.Autocomplete(input);
-//    autocomplete.setTypes(types);
+
     autocomplete.bindTo('bounds', map);
 
     var infowindow = new google.maps.InfoWindow();
 
     var marker = new google.maps.Marker({
+        position: latlng,
         map: map,
-        anchorPoint: new google.maps.Point(0, -29)
+        anchorPoint: new google.maps.Point(0, -29),
+        draggable: true
     });
 
-//initAutocomplete();
     autocomplete.addListener('place_changed', function () {
         infowindow.close();
         marker.setVisible(false);
@@ -68,17 +59,17 @@ function initMap(lat, lng, container_div) {
 
         // set zip code in form
         var address_components = place.address_components;
-        
-        for (i = 0; i < address_components.length; i++) { 
-            if(address_components[i]["types"] == "postal_code"){
-               container_div.find("input[name=zip]").val(address_components[i]["long_name"]); 
+
+        for (i = 0; i < address_components.length; i++) {
+            if (address_components[i]["types"] == "postal_code") {
+                container_div.find("input[name=zip]").val(address_components[i]["long_name"]);
             }
         }
-        
+
         // change lat lng in form
         container_div.find("input[name=latitude]").val(place.geometry.location.lat());
         container_div.find("input[name=longitude]").val(place.geometry.location.lng());
-        
+
         marker.setIcon(/** @type {google.maps.Icon} */({
             url: place.icon,
             size: new google.maps.Size(71, 71),
