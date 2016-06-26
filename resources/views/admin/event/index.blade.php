@@ -93,7 +93,7 @@
     }
     
     // show map on activation
-    $( "#accordion" ).on( "accordionactivate", function( event, ui ) {
+    $( "body" ).on( "accordionactivate", "#accordion", function( event, ui ) {
 
         var lat = ui.newPanel.find("input[name=latitude]").val();
         var lng = ui.newPanel.find("input[name=longitude]").val();
