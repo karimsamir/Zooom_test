@@ -21,9 +21,9 @@ Route::group(['middleware' => ['web']], function() {
         return view('welcome');
     });
 
-    
-            Route::auth();
-            
+
+    Route::auth();
+
     Route::group(['namespace' => 'Admin'], function() {
         // Controllers Within The "App\Http\Controllers\Admin" Namespace
 
@@ -31,24 +31,37 @@ Route::group(['middleware' => ['web']], function() {
 
 
             Route::resource('event', 'EventController', [
-                "except" =>["edit", "show"],
+                "except" => ["edit", "show"],
                 'names' =>
                 [
-                    'index' => 'indexEvent',
-                    'create' => 'createEvent',
-                    'store' => 'storeEvent',
-                    'update' => 'updateEvent',
-                    'destroy' => 'deleteEvent'
+                    'index' => 'adminIndexEvent',
+                    'create' => 'adminCreateEvent',
+                    'store' => 'adminStoreEvent',
+                    'update' => 'adminUpdateEvent',
+                    'destroy' => 'adminDeleteEvent'
                 ]
                     ]
             );
-            
+
             Route::post('event/changeposition', [
                 "uses" => "EventController@changePosition",
-                "as" => "changeEventPosition"
+                "as" => "adminChangeEventPosition"
             ]);
         });
     });
+
+    Route::resource('event', 'EventController', [
+        "except" => ["edit", "show"],
+        'names' =>
+        [
+            'index' => 'indexEvent',
+            'create' => 'createEvent',
+            'store' => 'storeEvent',
+            'update' => 'updateEvent',
+            'destroy' => 'deleteEvent'
+        ]
+            ]
+    );
 });
 
 Route::auth();

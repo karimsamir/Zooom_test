@@ -15,7 +15,7 @@
                     {!! Form::open([
                         'method' => 'DELETE',
                         'name' => 'frm_delete_event',
-                        'route' => ['adminDeleteEvent', $event->id]]) !!}
+                        'route' => ['deleteEvent', $event->id]]) !!}
 
                         {!! Form::button( 'Delete<i class="fa fa-trash fa-lg"></i>', 
                         ['type' => 'submit',
@@ -31,7 +31,7 @@
                     {!! Form::model($event, [
                     'method' => 'PUT',
                     'name' => 'frm_update_event', 
-                    'route' => ['adminUpdateEvent', $event->id],
+                    'route' => ['updateEvent', $event->id],
                     'class' => 'form-horizontal',
                     'data-index' => $key
                     ]) !!}

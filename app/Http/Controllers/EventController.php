@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests;
@@ -15,14 +15,6 @@ use Carbon\Carbon;
 
 class EventController extends Controller {
 
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct() {
-        $this->middleware('auth');
-    }
 
     /**
      * Show the event listing page.
@@ -32,22 +24,16 @@ class EventController extends Controller {
     public function index(Request $request) {
 
         $events = Event::orderBy('position')->get();
-        // get all countries to be displayed in ddl
-        $countries = Country::getAllCountries();
-        // get all categories to be displayed in ddl
-        $categories = Category::getAllCategories();
 
-        $view_variables = array(
-            "events" => $events,
-            "countries" => $countries,
-            "categories" => $categories);
+
+        $view_variables = array("events" => $events);
         
         if ($request->ajax()) {
 
-            return view("admin.event.includes.ajaxIndex", $view_variables);
+            return view("event.includes.ajaxIndex", $view_variables);
         } 
         else {
-            return view("admin.event.index", $view_variables);
+            return view("event.index", $view_variables);
         }
     }
 
@@ -68,7 +54,7 @@ class EventController extends Controller {
                     'msg' => $validator->getMessageBag()->toArray()
                 );
             } else {
-                return redirect(route('adminCreateEvent'))
+                return redirect(route('createEvent'))
                                 ->withErrors($validator)
                                 ->withInput();
             }
@@ -93,7 +79,7 @@ class EventController extends Controller {
                     'msg' => "Event added successfully"
                 );
             } else {
-                return redirect(route('adminIndexEvent', $id))->with([
+                return redirect(route('showEvent', $id))->with([
                             "success" => "Event added successfully!!"
                 ]);
             }
@@ -145,7 +131,7 @@ class EventController extends Controller {
 
             return response()->json($arr_result);
         } else {
-            return redirect(route("adminIndexEvent", $inputs->id));
+            return redirect(route("showEvent", $inputs->id));
         }
     }
 

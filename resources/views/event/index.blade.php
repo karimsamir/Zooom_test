@@ -25,7 +25,7 @@
         <div>
             {!! Form::open(['method' => 'POST',
             'name' => 'frm_update_event', 
-            'route' => ['adminStoreEvent'],
+            'route' => ['storeEvent'],
             'class' => 'form-horizontal',
             'data-index' => 20000
             ]) !!}
@@ -256,7 +256,7 @@
         selFailMessageContainer.hide();
         // call the ajax method
         $.ajax({
-            url: '{!! route("adminIndexEvent") !!}',
+            url: '{!! route("indexEvent") !!}',
             type: 'GET',
             success: function (retData) {
                 // refresh the whole page
@@ -290,7 +290,7 @@
         });
 
         $.ajax({
-            url: "{!! route('adminChangeEventPosition') !!}",
+            url: "{!! route('changeEventPosition') !!}",
             type: 'POST',
             headers: {'X-CSRF-Token': '{{ Session::token() }}'},
             data: {'positions': arrSection},
