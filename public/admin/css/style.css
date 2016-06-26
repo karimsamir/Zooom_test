@@ -1,0 +1,12 @@
+.delete_event {
+    font-size: 10px !important;
+    margin-top: -23px;
+}
+.delete_event i{
+    padding-left: 3px;
+}
+
+.map_canvas{
+    height: 300px;
+    width: 100%;
+}
