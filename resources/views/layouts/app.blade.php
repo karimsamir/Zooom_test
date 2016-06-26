@@ -14,11 +14,10 @@
     <!-- Styles -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/jquery-ui.css">
-    \
+    <link rel="stylesheet" type="text/css" id="theme" href="{{ asset('css/style.css') }}">
     
     {{-- <link href="{{ elixir('css/app.css') }}" rel="stylesheet"> --}}
 
-    <link rel="stylesheet" type="text/css" id="theme" href="{{ asset('/css/style.css') }}"/>
     
     
     <style>
@@ -46,35 +45,16 @@
 
                 <!-- Branding Image -->
                 <a class="navbar-brand" href="{{ url('/') }}">
-                    Laravel
+                    Home
                 </a>
             </div>
 
-            <div class="collapse navbar-collapse" id="app-navbar-collapse">
-                <!-- Left Side Of Navbar -->
+<!--            <div class="collapse navbar-collapse" id="app-navbar-collapse">
+                 Left Side Of Navbar 
                 <ul class="nav navbar-nav">
-                    <li><a href="{{ url('/home') }}">Home</a></li>
+                    <li><a href="{{ url('/') }}">Home</a></li>
                 </ul>
-
-                <!-- Right Side Of Navbar -->
-                <ul class="nav navbar-nav navbar-right">
-                    <!-- Authentication Links -->
-                    @if (Auth::guest())
-                        <li><a href="{{ url('/login') }}">Login</a></li>
-                        <li><a href="{{ url('/register') }}">Register</a></li>
-                    @else
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                                {{ Auth::user()->name }} <span class="caret"></span>
-                            </a>
-
-                            <ul class="dropdown-menu" role="menu">
-                                <li><a href="{{ url('/logout') }}"><i class="fa fa-btn fa-sign-out"></i>Logout</a></li>
-                            </ul>
-                        </li>
-                    @endif
-                </ul>
-            </div>
+            </div>-->
         </div>
     </nav>
         
@@ -96,17 +76,22 @@
             <span class="content"></span>
         </div>
     </div>
-    
-    @yield('content')
-
+    <div>
+        @yield('content')
+    </div>
     <!-- JavaScripts -->
     <script src="//code.jquery.com/jquery-2.2.3.min.js"></script>    
-    <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js" ></script>    
+    <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>    
     
     
     
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC8cZEQ4NUtn43xVU8eZa-xQtGlo1t3p9Y&libraries=places"
-        async defer></script>
+<!--<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC8cZEQ4NUtn43xVU8eZa-xQtGlo1t3p9Y" async defer></script>-->
+
+<script src="//maps.googleapis.com/maps/api/js?key=AIzaSyC8cZEQ4NUtn43xVU8eZa-xQtGlo1t3p9Y">
+    </script>
+    
+    <!--https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&callback=initialize-->
+    
     <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script> -->
     
     

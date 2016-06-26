@@ -17,9 +17,22 @@
 Route::group(['middleware' => ['web']], function() {
 
 
-    Route::get('/', function () {
-        return view('welcome');
-    });
+//    Route::get('/', function () {
+//        return view('welcome');
+//    });
+    
+        Route::resource('/', 'EventController', [
+        "except" => ["edit", "show"],
+        'names' =>
+        [
+            'index' => 'indexEvent',
+            'create' => 'createEvent',
+            'store' => 'storeEvent',
+            'update' => 'updateEvent',
+            'destroy' => 'deleteEvent'
+        ]
+            ]
+    );
 
 
     Route::auth();
@@ -50,18 +63,7 @@ Route::group(['middleware' => ['web']], function() {
         });
     });
 
-    Route::resource('event', 'EventController', [
-        "except" => ["edit", "show"],
-        'names' =>
-        [
-            'index' => 'indexEvent',
-            'create' => 'createEvent',
-            'store' => 'storeEvent',
-            'update' => 'updateEvent',
-            'destroy' => 'deleteEvent'
-        ]
-            ]
-    );
+
 });
 
 Route::auth();

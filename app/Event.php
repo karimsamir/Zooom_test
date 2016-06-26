@@ -38,24 +38,34 @@ class Event extends Model {
     public function getEndDateAttribute() {
         return Carbon::parse($this->attributes['end_date'])->format('d-m-Y');
     }
- 
+
     /**
      * update event positions using transaction
      * @param $positions array with event_id and position
      */
-    public function updatePositions($positions)
-    {
+    public function updatePositions($positions) {
         // run a Db transaction to update positions
-        DB::transaction(function () use ($positions){
+        DB::transaction(function () use ($positions) {
 
-            foreach($positions as $position){
+            foreach ($positions as $position) {
 
                 DB::table($this->table)
-                    ->where(["id" => $position["event_id"]])
-                    ->update(['position' => $position["position"]]);
-
+                        ->where(["id" => $position["event_id"]])
+                        ->update(['position' => $position["position"]]);
             }
         });
+    }
+
+    public function getAllEventsByCategory($category_id) {
+        $events = DB::table('event')
+                ->select('event.*', 'country.*')
+                ->join('country', 'event.country_id', '=', 'country.id')
+                ->where("category_id", $category_id)
+                ->orderBy("position", "ASC")
+                ->limit(10)
+                ->get();
+
+        return $events;
     }
 
 }
