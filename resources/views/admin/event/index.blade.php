@@ -55,7 +55,7 @@
 
 @push('scripts')
 
-<script type="text/javascript" src="{{ asset('js/map.js')}}"></script>
+<script type="text/javascript" src="{{ asset('admin/js/map.js')}}"></script>
 
 <script>
 
