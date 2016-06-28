@@ -23,22 +23,15 @@ class EventController extends Controller {
      */
     public function index(Request $request) {
 
-//        $events = Event::orderBy('category_id', "ASC")
-//                ->orderBy("position", "ASC")->get();
-
         $categories = Category::orderBy('id', "ASC")->get();
 
         $event = new Event();
         
         foreach ($categories as $key => $category) {
-//            $categories[$key]["events"] = Event::orderBy("position", "ASC")
-//                    ->where("category_id", $category->id)
-//                    ->get()->toArray();
-            
+     
             $categories[$key]["events"] = $event->getAllEventsByCategory($category->id);
         }
-        
-//        die(var_dump($categories->toArray()));
+       
         
         $view_variables = array(
                 "categories" => $categories);
