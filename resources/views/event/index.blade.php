@@ -6,23 +6,37 @@
     <div id="map_canvas"></div>
     @if(count($categories) > 0)
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 filter_category_list_container">
-        @foreach($categories as $catKey => $category)
-        <div class="checkbox-inline">
-            <label>
-                <input type="checkbox" name="category" class="filter_category_list"
-                       value="{{$category->id}}">
-                {{$category->category_name}}
-            </label>
+        <div class="row">
+            @foreach($categories as $catKey => $category)
+            <div class="checkbox-inline">
+                <label>
+                    <input type="checkbox" name="category" class="filter_category_list"
+                           value="{{$category->id}}">
+                    {{$category->category_name}}
+                </label>
+            </div>
+            @endforeach
         </div>
-        @endforeach
-    </div>    
+        <div class="row col-sm-9">
+            <input type="search" name="autocomplete" class="form-control"
+                   placeholder="Search">
+
+        </div>
+    </div>
     @endif    
 </div>
+
 
 @foreach($categories as $catKey => $category)
 
 
-<div class="category_group col-xs-5 col-sm-5 col-md-5 col-lg-5">
+<div class="category_group 
+      @if($catKey % 2 == 0) 
+         col-xs-7 col-sm-7 col-md-7 col-lg-7
+         @else
+         col-xs-4 col-sm-4 col-md-4 col-lg-4
+         @endif
+     ">
     <h3 class="box cat_title" style="text-align: center;">{{$category->category_name}}</h3>
     <input type="hidden" name="category_id" value="{{$category->id}}">
     @if(count($category["events"]) > 0)
@@ -33,7 +47,7 @@
          @if($catKey % 2 == 0) 
          col-xs-6 col-sm-6 col-md-6 col-lg-6 
          @else
-         col-xs-10 col-sm-10 col-md-10 col-lg-10
+         col-xs-12 col-sm-12 col-md-12 col-lg-12
          @endif">
         <div class="row box">
             <!--<div class="info">-->
@@ -69,11 +83,11 @@
             <input type="hidden" name="longitude" value="{{$event->longitude}}">
             <input type="hidden" name="description" value="{{$event->description}}">
 
-            
-                <button class="col-xs-12 col-sm-12 col-md-12 col-lg-12 btn btn-info show_on_map">
-                    Show on Map
-                </button>
-            
+
+            <button class="col-xs-12 col-sm-12 col-md-12 col-lg-12 btn btn-info show_on_map">
+                Show on Map
+            </button>
+
 
             <!--</div>-->
         </div>
@@ -91,6 +105,10 @@
         <div class="event_dates"></div>
         <div class="event_title"></div>
         <div class="col-sm-12 event_country"></div>
+<!--        <input type="hidden" name="event_id" value="">
+        <button class="col-xs-12 col-sm-12 col-md-12 col-lg-12 btn btn-info rsvp_event">
+            RSVP
+        </button>-->
     </div>
 
 </div>
@@ -152,7 +170,7 @@ $(".show_on_map").click(function (e) {
             'slow');
 });
 
-$(".filter_category_list_container").click(function(){
+$(".filter_category_list_container").click(function () {
 //    console.warn($(this).val());
 
 
@@ -160,16 +178,16 @@ $(".filter_category_list_container").click(function(){
 //    console.warn("this.checked=="+this.checked+":::val=="+$(this).val()+":::");
 //    
     var filters = [];
-    
-    $(".filter_category_list").each(function(){
-        if(this.checked){
+
+    $(".filter_category_list").each(function () {
+        if (this.checked) {
             filters.push($(this).val());
         }
     });
-    
+
     console.info(filters);
     filterMarkers(filters);
-    
+
 });
 
 
