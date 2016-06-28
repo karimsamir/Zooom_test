@@ -22,7 +22,7 @@ function initMap() {
     infowindow = new google.maps.InfoWindow();
 }
 
-function addMarker(container, category_id) {
+function addMarker(container, category_id, show_marker) {
 
 //    console.log(container.find("input[name=latitude]").val());
 //    console.log(container.find("input[name=longitude]").val());
@@ -45,7 +45,7 @@ function addMarker(container, category_id) {
 
 //    console.warn($(".infowindow").html());
     var marker = new google.maps.Marker({
-        map: map,
+//        map: map,
         position: new google.maps.LatLng(lat, lng),
         title: title,
         custom_content: $(".infowindow_container").html(),
@@ -53,13 +53,16 @@ function addMarker(container, category_id) {
         category_id: category_id
     });
 
+    if (show_marker) {
+        marker.setMap(map);
+        setInfowindowAndShow(marker);
+    }
     //extend the bounds to include each marker's position
     bounds.extend(marker.position);
 
     google.maps.event.addListener(marker, 'click', function () {
 
-        infowindow.setContent(marker.custom_content);
-        infowindow.open(map, marker);
+        setInfowindowAndShow(marker);
     });
 
     //now fit the map to the newly inclusive bounds
@@ -70,5 +73,10 @@ function addMarker(container, category_id) {
 //    arr_markers.push(marker);
     arr_markers[marker_id] = marker;
     console.info(arr_markers);
+}
+
+function setInfowindowAndShow(marker) {
+    infowindow.setContent(marker.custom_content);
+    infowindow.open(map, marker);
 }
 

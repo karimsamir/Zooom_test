@@ -86,10 +86,42 @@
 <script type="text/javascript" src="{{ asset('js/map.js')}}"></script>
 
 <script>
-
+var arr_markers = {};
 //initMap();
 $(document).ready(function () {
+
+//    @foreach($categories as $catKey => $category)
+//        @if(count($category["events"]) > 0)
+//
+//            @foreach($category["events"] as $eventKey => $event)
+//
+//
+//            @endforeach
+//    
+//        @endif
+//    
+//    @endforeach
+
+
+
     initMap();
+
+    $(".show_on_map").each(function (index) {
+//        $(this).click();
+        var show_marker = false;
+
+        console.log("index==" + index + ":::");
+
+        var category_id = $(this).parents(".category_group").find("input[name=category_id]").val();
+
+        if (index < 10) {
+            show_marker = true;
+        }
+
+        addMarker($(this).parents(".event_container"), category_id, show_marker);
+
+    });
+
 });
 
 $(".show_on_map").click(function (e) {
@@ -97,8 +129,16 @@ $(".show_on_map").click(function (e) {
     var category_id = $(this).parents(".category_group").find("input[name=category_id]").val();
 
 
-    addMarker($(this).parents(".event_container"), category_id);
+    addMarker($(this).parents(".event_container"), category_id, true);
+    
+    // scroll to map to show marker
+    $('html,body').animate({
+        scrollTop: $("#map_canvas").offset().top},
+        'slow');
 });
+
+
+
 </script>
 
 @endpush  
