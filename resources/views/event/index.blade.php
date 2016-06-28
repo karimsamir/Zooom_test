@@ -34,9 +34,9 @@
                 </div>
             </div>
 
-            <div class="row event_title">
+            <div class="row event_title_container">
                 <div class="col-sm-10" style="text-align: left;">
-                    <strong>{{$event->title}}</strong>
+                    <strong class="event_title">{{$event->title}}</strong>
                 </div>
 
                 <div class="col-sm-2" style="text-align: right;">
