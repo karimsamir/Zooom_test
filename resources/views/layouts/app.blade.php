@@ -31,33 +31,7 @@
     </style>
 </head>
 <body id="app-layout">
-    <nav class="navbar navbar-default navbar-static-top">
-        <div class="container">
-            <div class="navbar-header">
-
-                <!-- Collapsed Hamburger -->
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#app-navbar-collapse">
-                    <span class="sr-only">Toggle Navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-
-                <!-- Branding Image -->
-                <a class="navbar-brand" href="{{ url('/') }}">
-                    Home
-                </a>
-            </div>
-
-<!--            <div class="collapse navbar-collapse" id="app-navbar-collapse">
-                 Left Side Of Navbar 
-                <ul class="nav navbar-nav">
-                    <li><a href="{{ url('/') }}">Home</a></li>
-                </ul>
-            </div>-->
-        </div>
-    </nav>
-        
+     
     <div id="alert_messages">
         <div class="alert alert-success" style="margin-top:1em; display:none;">
             <button type="button" class="close" data-dismiss="alert">
@@ -87,8 +61,11 @@
     
 <!--<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC8cZEQ4NUtn43xVU8eZa-xQtGlo1t3p9Y" async defer></script>-->
 
-<script src="//maps.googleapis.com/maps/api/js?key=AIzaSyC8cZEQ4NUtn43xVU8eZa-xQtGlo1t3p9Y">
-    </script>
+<!--<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC8cZEQ4NUtn43xVU8eZa-xQtGlo1t3p9Y&libraries=places">
+    </script>-->
+    
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC8cZEQ4NUtn43xVU8eZa-xQtGlo1t3p9Y&libraries=geometry,places"
+        async defer></script>
     
     <!--https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&callback=initialize-->
     

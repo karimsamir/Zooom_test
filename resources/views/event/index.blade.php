@@ -4,6 +4,7 @@
 
 <div id="all_events">
     <div id="map_canvas"></div>
+    
     @if(count($categories) > 0)
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 filter_category_list_container">
         <div class="row">
@@ -17,13 +18,18 @@
             </div>
             @endforeach
         </div>
+
+    </div>
+    @endif
+    
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
         <div class="row col-sm-9">
-            <input type="search" name="autocomplete" class="form-control"
+            <input type="search" id="autocomplete" name="autocomplete" class="form-control"
                    placeholder="Search">
 
         </div>
     </div>
-    @endif    
+    
 </div>
 
 
@@ -31,11 +37,11 @@
 
 
 <div class="category_group 
-      @if($catKey % 2 == 0) 
-         col-xs-7 col-sm-7 col-md-7 col-lg-7
-         @else
-         col-xs-4 col-sm-4 col-md-4 col-lg-4
-         @endif
+     @if($catKey % 2 == 0) 
+     col-xs-7 col-sm-7 col-md-7 col-lg-7
+     @else
+     col-xs-4 col-sm-4 col-md-4 col-lg-4
+     @endif
      ">
     <h3 class="box cat_title" style="text-align: center;">{{$category->category_name}}</h3>
     <input type="hidden" name="category_id" value="{{$category->id}}">
@@ -142,9 +148,7 @@ $(document).ready(function () {
     $(".show_on_map").each(function (index) {
 //        $(this).click();
         var show_marker = false;
-
-        console.log("index==" + index + ":::");
-
+        
         var category_id = $(this).parents(".category_group").find("input[name=category_id]").val();
 
         if (index < 10) {
@@ -171,12 +175,7 @@ $(".show_on_map").click(function (e) {
 });
 
 $(".filter_category_list_container").click(function () {
-//    console.warn($(this).val());
 
-
-//    $(this).toggle(this.checked);
-//    console.warn("this.checked=="+this.checked+":::val=="+$(this).val()+":::");
-//    
     var filters = [];
 
     $(".filter_category_list").each(function () {
@@ -185,7 +184,6 @@ $(".filter_category_list_container").click(function () {
         }
     });
 
-    console.info(filters);
     filterMarkers(filters);
 
 });

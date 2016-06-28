@@ -21,19 +21,17 @@ function initMap() {
     //create empty LatLngBounds object
     bounds = new google.maps.LatLngBounds();
     infowindow = new google.maps.InfoWindow();
+    autoComplete();
 }
 
 function addMarker(container, category_id, show_marker) {
 
-//    console.log(container.find("input[name=latitude]").val());
-//    console.log(container.find("input[name=longitude]").val());
     var lat = container.find("input[name=latitude]").val();
     var lng = container.find("input[name=longitude]").val();
     var title_container = container.find(".event_title_container").html();
     var title = container.find(".event_title").html();
     var event_dates = container.find(".event_dates").html();
     var country = container.find(".event_country").html();
-//    var description = container.find("input[name=description]").val();
 
     var event_id = container.find("input[name=event_id]").val();
     var marker_id = "cat_" + category_id + "_marker_" + event_id;
@@ -86,7 +84,7 @@ function filterMarkers(filters) {
     for (i = 0; i < filters.length; i++) {
 
         for (var j = 0; j < arr_shown_markers.length; j++) {
-            if(filters[i] == arr_shown_markers[j].category_id){
+            if (filters[i] == arr_shown_markers[j].category_id) {
                 arr_shown_markers[j].setMap(map);
             }
         }
@@ -98,4 +96,45 @@ function deleteMarkers() {
     for (var i = 0; i < arr_shown_markers.length; i++) {
         arr_shown_markers[i].setMap(null);
     }
+}
+
+function autoComplete() {
+
+    var input = document.getElementById("autocomplete");
+
+    var autocomplete = new google.maps.places.Autocomplete(input);
+
+    autocomplete.bindTo('bounds', map);
+
+    geocoder = new google.maps.Geocoder;
+
+    autocomplete.addListener('place_changed', function () {
+        
+        deleteMarkers();
+       
+//        infowindow.close();
+//        marker.setVisible(false);
+        var place = autocomplete.getPlace();
+        map.setCenter(place.geometry.location);
+        map.setZoom(4);
+        
+//        bounds.extend(place.geometry.location);
+
+        arr_shown_markers = [];
+        
+        for (var i = 0; i < arr_markers.length; i++) {
+            
+            if (google.maps.geometry.spherical.computeDistanceBetween
+            (arr_markers[i].getPosition(), place.geometry.location) < 500000) {
+                
+                bounds.extend(arr_markers[i].getPosition());
+                arr_markers[i].setMap(map);
+                arr_shown_markers.push(arr_markers[i]);
+                
+            } else {
+                arr_markers[i].setMap(null);
+            }
+        }
+//        map.fitBounds(bounds);
+    });
 }
