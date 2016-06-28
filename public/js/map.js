@@ -1,7 +1,8 @@
 var map = null;
 var marker = null;
 var infowindow = null;
-var arr_markers = {};
+var arr_markers = [];
+var arr_shown_markers = [];
 var bounds;
 
 function initMap() {
@@ -43,7 +44,6 @@ function addMarker(container, category_id, show_marker) {
 
     infowindow.close();
 
-//    console.warn($(".infowindow").html());
     var marker = new google.maps.Marker({
 //        map: map,
         position: new google.maps.LatLng(lat, lng),
@@ -54,6 +54,8 @@ function addMarker(container, category_id, show_marker) {
     });
 
     if (show_marker) {
+//        arr_shown_markers[marker_id] = marker;
+        arr_shown_markers.push(marker);
         marker.setMap(map);
         setInfowindowAndShow(marker);
     }
@@ -68,11 +70,8 @@ function addMarker(container, category_id, show_marker) {
     //now fit the map to the newly inclusive bounds
     map.fitBounds(bounds);
 
+    arr_markers.push(marker);
 
-
-//    arr_markers.push(marker);
-    arr_markers[marker_id] = marker;
-    console.info(arr_markers);
 }
 
 function setInfowindowAndShow(marker) {
@@ -80,3 +79,23 @@ function setInfowindowAndShow(marker) {
     infowindow.open(map, marker);
 }
 
+function filterMarkers(filters) {
+    //remove all markers
+    deleteMarkers();
+
+    for (i = 0; i < filters.length; i++) {
+
+        for (var j = 0; j < arr_shown_markers.length; j++) {
+            if(filters[i] == arr_shown_markers[j].category_id){
+                arr_shown_markers[j].setMap(map);
+            }
+        }
+    }
+}
+
+// Deletes all markers in the array.
+function deleteMarkers() {
+    for (var i = 0; i < arr_shown_markers.length; i++) {
+        arr_shown_markers[i].setMap(null);
+    }
+}
