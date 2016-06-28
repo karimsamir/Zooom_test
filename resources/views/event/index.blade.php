@@ -4,9 +4,23 @@
 
 <div id="all_events">
     <div id="map_canvas"></div>
+    @if(count($categories) > 0)
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 filter_category_list_container">
+        @foreach($categories as $catKey => $category)
+        <div class="checkbox-inline">
+            <label>
+                <input type="checkbox" name="category" class="filter_category_list"
+                       value="{{$category->id}}">
+                {{$category->category_name}}
+            </label>
+        </div>
+        @endforeach
+    </div>    
+    @endif    
 </div>
 
 @foreach($categories as $catKey => $category)
+
 
 <div class="category_group col-xs-5 col-sm-5 col-md-5 col-lg-5">
     <h3 class="box cat_title" style="text-align: center;">{{$category->category_name}}</h3>
@@ -55,9 +69,11 @@
             <input type="hidden" name="longitude" value="{{$event->longitude}}">
             <input type="hidden" name="description" value="{{$event->description}}">
 
-            <a href="void(0);" class="row btn show_on_map col-sm-12">
-                <button class="btn btn-info">Show on Map</button>
-            </a>
+            
+                <button class="col-xs-12 col-sm-12 col-md-12 col-lg-12 btn btn-info show_on_map">
+                    Show on Map
+                </button>
+            
 
             <!--</div>-->
         </div>
@@ -86,7 +102,6 @@
 <script type="text/javascript" src="{{ asset('js/map.js')}}"></script>
 
 <script>
-var arr_markers = {};
 //initMap();
 $(document).ready(function () {
 
@@ -130,11 +145,31 @@ $(".show_on_map").click(function (e) {
 
 
     addMarker($(this).parents(".event_container"), category_id, true);
-    
+
     // scroll to map to show marker
     $('html,body').animate({
         scrollTop: $("#map_canvas").offset().top},
-        'slow');
+            'slow');
+});
+
+$(".filter_category_list_container").click(function(){
+//    console.warn($(this).val());
+
+
+//    $(this).toggle(this.checked);
+//    console.warn("this.checked=="+this.checked+":::val=="+$(this).val()+":::");
+//    
+    var filters = [];
+    
+    $(".filter_category_list").each(function(){
+        if(this.checked){
+            filters.push($(this).val());
+        }
+    });
+    
+    console.info(filters);
+    filterMarkers(filters);
+    
 });
 
 
