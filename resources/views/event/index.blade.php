@@ -4,7 +4,7 @@
 
 <div id="all_events">
     <div id="map_canvas"></div>
-    
+
     @if(count($categories) > 0)
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 filter_category_list_container">
         <div class="row">
@@ -74,7 +74,7 @@
                 </div>
 
                 <div class="col-sm-2" style="text-align: right;">
-                    <span class="clear: right;">{{$eventKey +1 }}</span>
+                    <span class="marker_index">{{$eventKey +1 }}</span>
                 </div>
             </div>
 
@@ -126,22 +126,7 @@
 <script type="text/javascript" src="{{ asset('js/map.js')}}"></script>
 
 <script>
-//initMap();
 $(document).ready(function () {
-
-//    @foreach($categories as $catKey => $category)
-//        @if(count($category["events"]) > 0)
-//
-//            @foreach($category["events"] as $eventKey => $event)
-//
-//
-//            @endforeach
-//    
-//        @endif
-//    
-//    @endforeach
-
-
 
     initMap();
 
