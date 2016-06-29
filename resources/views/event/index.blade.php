@@ -28,7 +28,7 @@
     </div>
     @endif
 
-    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    <div id="autocomplete_container" class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
         <div class="row col-sm-9">
             <input type="search" id="autocomplete" name="autocomplete" class="form-control"
                    placeholder="Search">

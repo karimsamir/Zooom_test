@@ -57,3 +57,11 @@
 .hidden_map{
     height: 0px !important;
 }
+#autocomplete_container{
+    margin-top: -92px;
+    border-top-color: #ddd;
+}
+
+#autocomplete_container input{
+    background-color : #d1d1d1; 
+}
