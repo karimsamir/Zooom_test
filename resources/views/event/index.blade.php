@@ -3,11 +3,14 @@
 @section('content')
 
 <div id="all_events">
-    <div id="map_canvas"></div>
+
 
     @if($isMobile)
-        @include('event.includes.indexMobile')
+    @include('event.includes.indexMobile')
+    @else
+    <div id="map_canvas"></div>
     @endif
+
     @if(count($categories) > 0)
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 filter_category_list_container">
         <div class="row">
@@ -24,7 +27,7 @@
 
     </div>
     @endif
-    
+
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
         <div class="row col-sm-9">
             <input type="search" id="autocomplete" name="autocomplete" class="form-control"
@@ -32,7 +35,7 @@
 
         </div>
     </div>
-    
+
 </div>
 
 
@@ -40,11 +43,16 @@
 
 
 <div class="category_group 
+     @if(!$isMobile)
+
      @if($catKey % 2 == 0) 
      col-xs-7 col-sm-7 col-md-7 col-lg-7
      @else
      col-xs-4 col-sm-4 col-md-4 col-lg-4
      @endif
+
+     @endif
+
      ">
     <h3 class="box cat_title" style="text-align: center;">{{$category->category_name}}</h3>
     <input type="hidden" name="category_id" value="{{$category->id}}">
@@ -53,12 +61,19 @@
     @foreach($category["events"] as $eventKey => $event)
 
     <div class="event_container
-         @if($catKey % 2 == 0) 
-         col-xs-6 col-sm-6 col-md-6 col-lg-6 
+         @if(!$isMobile)
+
+            @if($catKey % 2 == 0) 
+            col-xs-6 col-sm-6 col-md-6 col-lg-6 
+            @else
+            col-xs-12 col-sm-12 col-md-12 col-lg-12
+            @endif
          @else
-         col-xs-12 col-sm-12 col-md-12 col-lg-12
-         @endif">
-        <div class="row box">
+         col-xs-6 col-sm-6 col-md-6 col-lg-6 
+         @endif
+
+         ">
+        <div class="box col-xs-12 col-sm-12 col-md-12 col-lg-12">
             <!--<div class="info">-->
             <!--<h4 class="text-center">Title</h4>-->
             <div class="row event_dates">
@@ -122,8 +137,6 @@
 
 </div>
 
-</div>
-
 @push('scripts')
 
 <script type="text/javascript" src="{{ asset('js/map.js')}}"></script>
@@ -131,26 +144,15 @@
 <script>
 $(document).ready(function () {
 
-    initMap();
-
-    $(".show_on_map").each(function (index) {
-//        $(this).click();
-        var show_marker = false;
-        
-        var category_id = $(this).parents(".category_group").find("input[name=category_id]").val();
-
-        if (index < 10) {
-            show_marker = true;
-        }
-
-        addMarker($(this).parents(".event_container"), category_id, show_marker);
-
-    });
-
+    activateMapIfExist();
 });
 
 $(".show_on_map").click(function (e) {
     e.preventDefault();
+
+    addActiveMapDiv();
+    activateMapIfExist();
+
     var category_id = $(this).parents(".category_group").find("input[name=category_id]").val();
 
 
@@ -164,6 +166,10 @@ $(".show_on_map").click(function (e) {
 
 $(".filter_category_list_container").click(function () {
 
+    addActiveMapDiv();
+    activateMapIfExist();
+
+
     var filters = [];
 
     $(".filter_category_list").each(function () {
@@ -176,7 +182,30 @@ $(".filter_category_list_container").click(function () {
 
 });
 
+function activateMapIfExist() {
+    if ($("#map_canvas").length > 0) {
+        initMap();
 
+        $(".show_on_map").each(function (index) {
+
+            var show_marker = false;
+
+            var category_id = $(this).parents(".category_group").find("input[name=category_id]").val();
+
+            if (index < 10) {
+                show_marker = true;
+            }
+
+            addMarker($(this).parents(".event_container"), category_id, show_marker);
+
+        });
+    }
+}
+
+function addActiveMapDiv() {
+    $("#all_events").prepend('<div id="map_canvas"></div>');
+    $("#staticMap").remove();
+}
 
 </script>
 
