@@ -32,6 +32,7 @@ function addMarker(container, category_id, show_marker) {
     var title = container.find(".event_title").html();
     var event_dates = container.find(".event_dates").html();
     var country = container.find(".event_country").html();
+    var marker_index = container.find(".marker_index").html();
 
     var event_id = container.find("input[name=event_id]").val();
     var marker_id = "cat_" + category_id + "_marker_" + event_id;
@@ -44,6 +45,7 @@ function addMarker(container, category_id, show_marker) {
 
     var marker = new google.maps.Marker({
 //        map: map,
+        label: marker_index,
         position: new google.maps.LatLng(lat, lng),
         title: title,
         custom_content: $(".infowindow_container").html(),
