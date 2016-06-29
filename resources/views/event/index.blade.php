@@ -5,6 +5,9 @@
 <div id="all_events">
     <div id="map_canvas"></div>
 
+    @if($isMobile)
+        @include('event.includes.indexMobile')
+    @endif
     @if(count($categories) > 0)
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 filter_category_list_container">
         <div class="row">

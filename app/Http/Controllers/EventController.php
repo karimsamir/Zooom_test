@@ -12,9 +12,10 @@ use App\Event;
 use App\Country;
 use App\Category;
 use Carbon\Carbon;
+//use Agent;
+use Jenssegers\Agent\Agent;
 
 class EventController extends Controller {
-
 
     /**
      * Show the event listing page.
@@ -26,23 +27,29 @@ class EventController extends Controller {
         $categories = Category::orderBy('id', "ASC")->get();
 
         $event = new Event();
-        
+
         foreach ($categories as $key => $category) {
-     
+
             $categories[$key]["events"] = $event->getAllEventsByCategory($category->id);
         }
-       
-        
-        $view_variables = array(
-                "categories" => $categories);
-        
-        if ($request->ajax()) {
 
-            return view("event.includes.ajaxIndex", $view_variables);
-        } 
-        else {
-            return view("event.index", $view_variables);
-        }
+        $agent = new Agent();
+
+        $viewVariables = array(
+            "categories" => $categories,
+            "isMobile" => $agent->isMobile(),
+            "staticMarkers" => "",
+            "staticMarkersCounter" => 0
+        );
+
+//        if($agent->isTablet()){
+//            die("mobile detected");
+//        }
+//        elseif($agent->isMobile()){
+//            die("tab detected");
+//        }
+
+        return view("event.index", $viewVariables);
     }
 
     /**
@@ -66,17 +73,16 @@ class EventController extends Controller {
                                 ->withErrors($validator)
                                 ->withInput();
             }
-        } 
-        else {
-            
+        } else {
+
             $inputs = $request->all();
-            
+
             $inputs["start_date"] = Carbon::createFromFormat('d-m-Y', $inputs["start_date"])->format('Y-m-d');
-            $inputs["end_date"] = Carbon::createFromFormat('d-m-Y',$inputs["end_date"])->format('Y-m-d');
+            $inputs["end_date"] = Carbon::createFromFormat('d-m-Y', $inputs["end_date"])->format('Y-m-d');
 
             $last_event_position = Event::all()->max('position');
 //            die(var_dump($last_event_position));
-            $inputs["position"] = $last_event_position +1;
+            $inputs["position"] = $last_event_position + 1;
             // save new event to DB
             Event::create($inputs);
 
@@ -114,10 +120,10 @@ class EventController extends Controller {
                     'msg' => $validator->getMessageBag()->toArray()
                 );
             } else {
-                
+
                 $start_date = Carbon::createFromFormat('d-m-Y', $inputs["start_date"])->format('Y-m-d');
-                $end_date = Carbon::createFromFormat('d-m-Y',$inputs["end_date"])->format('Y-m-d');
-                
+                $end_date = Carbon::createFromFormat('d-m-Y', $inputs["end_date"])->format('Y-m-d');
+
                 Event::where("id", $id)->update([
                     'country_id' => $inputs["country_id"],
                     'category_id' => $inputs["category_id"],
@@ -161,22 +167,21 @@ class EventController extends Controller {
         }
         return response(['msg' => 'Failed to delete event', 'status' => 'failed']);
     }
-    
+
     /**
      * update event positions
      * @param Request $request
      */
-    public function changePosition(Request $request){
+    public function changePosition(Request $request) {
 
         if ($request->ajax()) {
             $Event = new Event();
             $Event->updatePositions($request->all()["positions"]);
-        }
-        else{
+        } else {
             abort(404);
         }
     }
-    
+
     /**
      * Check for validation errors
      * @param $request

@@ -65,7 +65,7 @@
     </script>-->
     
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC8cZEQ4NUtn43xVU8eZa-xQtGlo1t3p9Y&libraries=geometry,places"
-        async defer></script>
+        ></script>
     
     <!--https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&callback=initialize-->
     
