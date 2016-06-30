@@ -31,7 +31,7 @@
     </style>
 </head>
 <body id="app-layout">
-     
+
     <div id="alert_messages">
         <div class="alert alert-success" style="margin-top:1em; display:none;">
             <button type="button" class="close" data-dismiss="alert">
@@ -55,26 +55,9 @@
     </div>
     <!-- JavaScripts -->
     <script src="//code.jquery.com/jquery-2.2.3.min.js"></script>    
-    <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>    
-    
-    
-    
-<!--<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC8cZEQ4NUtn43xVU8eZa-xQtGlo1t3p9Y" async defer></script>-->
-
-<!--<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC8cZEQ4NUtn43xVU8eZa-xQtGlo1t3p9Y&libraries=places">
-    </script>-->
-    
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC8cZEQ4NUtn43xVU8eZa-xQtGlo1t3p9Y&libraries=geometry,places"
+    <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>        
+    <script src="https://maps.googleapis.com/maps/api/js?key={{config('app.GOOGLE_MAP_KEY')}}&libraries=geometry,places"
         ></script>
-    
-    <!--https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&callback=initialize-->
-    
-    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script> -->
-    
-    
-<!--    <script type="text/javascript" src="{{ asset('bower_components/jquery/dist/jquery.min.js')}}"></script>
-     <script type="text/javascript" src="{{ asset('bower_components/jquery-ui/jquery-ui.min.js')}}"></script>-->
-    
     
     {{-- <script src="{{ elixir('js/app.js') }}"></script> --}}
 

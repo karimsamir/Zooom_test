@@ -5,6 +5,7 @@ var arr_markers = [];
 var arr_shown_markers = [];
 var bounds;
 var autocomplete;
+var radius = 500; // 500 km
 
 function initMap() {
 
@@ -119,8 +120,6 @@ function setAutocompleteInput() {
     var input = document.getElementById("autocomplete");
 
     autocomplete = new google.maps.places.Autocomplete(input);
-
-
 }
 
 function autoComplete() {
@@ -153,7 +152,7 @@ function autoComplete() {
         for (var i = 0; i < arr_markers.length; i++) {
 
             if (google.maps.geometry.spherical.computeDistanceBetween
-                    (arr_markers[i].getPosition(), place.geometry.location) < 500000) {
+                    (arr_markers[i].getPosition(), place.geometry.location) < (radius * 1000)) {
 
                 bounds.extend(arr_markers[i].getPosition());
                 arr_markers[i].setMap(map);
