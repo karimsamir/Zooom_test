@@ -44,16 +44,13 @@
                 </button>
 
                 <!-- Branding Image -->
-<!--                <a class="navbar-brand" href="{{ url('/') }}">
-                    Laravel
-                </a>-->
+                <a class="navbar-brand" href="{{ url('/') }}">
+                    Home
+                </a>
             </div>
 
             <div class="collapse navbar-collapse" id="app-navbar-collapse">
                 <!-- Left Side Of Navbar -->
-                <ul class="nav navbar-nav">
-                    <li><a href="{{ url('/') }}">Home</a></li>
-                </ul>
 
                 <!-- Right Side Of Navbar -->
                 <ul class="nav navbar-nav navbar-right">
@@ -102,7 +99,7 @@
     <script src="//code.jquery.com/jquery-2.2.3.min.js"></script>    
     <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js" ></script>    
     
-    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script> 
     
 <script src="https://maps.googleapis.com/maps/api/js?key={{config('app.GOOGLE_MAP_KEY')}}&libraries=places"
         async defer></script>

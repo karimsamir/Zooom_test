@@ -11,17 +11,10 @@
   |
  */
 
-
-
-
 Route::group(['middleware' => ['web']], function() {
 
-
-//    Route::get('/', function () {
-//        return view('welcome');
-//    });
-    
-        Route::resource('/', 'EventController', [
+    // frontend controller
+    Route::resource('/', 'EventController', [
         "except" => ["edit", "show"],
         'names' =>
         [
@@ -33,39 +26,37 @@ Route::group(['middleware' => ['web']], function() {
         ]
             ]
     );
-
-
+    
     Route::auth();
 
-    Route::group(['namespace' => 'Admin'], function() {
-        // Controllers Within The "App\Http\Controllers\Admin" Namespace
+    Route::group(['middleware' => 'auth'], function () {
+        
+        Route::group(['namespace' => 'Admin'], function() {
+            // Controllers Within The "App\Http\Controllers\Admin" Namespace
 
-        Route::group(['prefix' => 'admin'], function () {
+            Route::group(['prefix' => 'admin'], function () {
 
-
-            Route::resource('event', 'EventController', [
-                "except" => ["edit", "show"],
-                'names' =>
-                [
-                    'index' => 'adminIndexEvent',
-                    'create' => 'adminCreateEvent',
-                    'store' => 'adminStoreEvent',
-                    'update' => 'adminUpdateEvent',
-                    'destroy' => 'adminDeleteEvent'
-                ]
+                Route::resource('event', 'EventController', [
+                    "except" => ["edit", "show"],
+                    'names' =>
+                    [
+                        'index' => 'adminIndexEvent',
+                        'create' => 'adminCreateEvent',
+                        'store' => 'adminStoreEvent',
+                        'update' => 'adminUpdateEvent',
+                        'destroy' => 'adminDeleteEvent'
                     ]
-            );
+                        ]
+                );
 
-            Route::post('event/changeposition', [
-                "uses" => "EventController@changePosition",
-                "as" => "adminChangeEventPosition"
-            ]);
+                Route::post('event/changeposition', [
+                    "uses" => "EventController@changePosition",
+                    "as" => "adminChangeEventPosition"
+                ]);
+
+
+
+            });
         });
     });
-
-
 });
-
-Route::auth();
-
-Route::get('/home', 'HomeController@index');

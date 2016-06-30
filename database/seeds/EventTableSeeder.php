@@ -26,6 +26,7 @@ class EventTableSeeder extends Seeder
                 $arrCountries[$country->country_code] = $country->id;
             }
             
+            $categories = DB::table('category')->select('id')->get();
             
         for ($i = 0; $i < $limit; $i++) {
                          
@@ -40,6 +41,8 @@ class EventTableSeeder extends Seeder
                 $country_id =   rand(1, 246);
             }
             
+            $random_cat_id = rand(0, count($categories) - 1);
+            
             $event = array(
                 "title" => $faker->name,
                 "location" => $faker->address,
@@ -50,7 +53,7 @@ class EventTableSeeder extends Seeder
                 "start_date" => $start_date,
                 "end_date" => $end_date,
                 "country_id" =>   $country_id,
-                "category_id" => rand(1, 3),
+                "category_id" => $categories[$random_cat_id]->id,
                 "position" => $i + 1
                 
             );
