@@ -12,9 +12,22 @@ function initMap() {
 
     var latlng = new google.maps.LatLng(40.265006, -99.995364);
 
+
+
     var mapOptions = {
         zoom: 8,
-        center: latlng
+        center: latlng,
+        mapTypeControl: true,
+          mapTypeControlOptions: {
+              style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
+              position: google.maps.ControlPosition.TOP_CENTER
+          },
+          zoomControl: true,
+          zoomControlOptions: {
+              position: google.maps.ControlPosition.LEFT_CENTER
+          },
+          scaleControl: true,
+          streetViewControl: false
     }
 
     map = new google.maps.Map(div_map, mapOptions);
