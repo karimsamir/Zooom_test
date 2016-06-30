@@ -4,6 +4,7 @@ var infowindow = null;
 var arr_markers = [];
 var arr_shown_markers = [];
 var bounds;
+var autocomplete;
 
 function initMap() {
 
@@ -21,7 +22,7 @@ function initMap() {
     //create empty LatLngBounds object
     bounds = new google.maps.LatLngBounds();
     infowindow = new google.maps.InfoWindow();
-    autoComplete();
+//    autoComplete();
 }
 
 function addMarker(container, category_id, show_marker) {
@@ -100,43 +101,82 @@ function deleteMarkers() {
     }
 }
 
+function setAutocompleteInput() {
+
+    var input = document.getElementById("autocomplete");
+
+    autocomplete = new google.maps.places.Autocomplete(input);
+
+
+}
+
 function autoComplete() {
 
     var input = document.getElementById("autocomplete");
 
-    var autocomplete = new google.maps.places.Autocomplete(input);
+    autocomplete = new google.maps.places.Autocomplete(input);
 
-    autocomplete.bindTo('bounds', map);
-
-    geocoder = new google.maps.Geocoder;
-
+//    autocomplete.bindTo('bounds', map);
     autocomplete.addListener('place_changed', function () {
-        
+
         deleteMarkers();
-       
+
 //        infowindow.close();
 //        marker.setVisible(false);
         var place = autocomplete.getPlace();
-        map.setCenter(place.geometry.location);
-        map.setZoom(4);
-        
+
+        if (map == null) {
+            addActiveMapDiv();
+            activateMapIfExist();
+
+            map.setCenter(place.geometry.location);
+            map.setZoom(4);
+        }
+
 //        bounds.extend(place.geometry.location);
 
         arr_shown_markers = [];
-        
+
         for (var i = 0; i < arr_markers.length; i++) {
-            
+
             if (google.maps.geometry.spherical.computeDistanceBetween
-            (arr_markers[i].getPosition(), place.geometry.location) < 500000) {
-                
+                    (arr_markers[i].getPosition(), place.geometry.location) < 500000) {
+
                 bounds.extend(arr_markers[i].getPosition());
                 arr_markers[i].setMap(map);
                 arr_shown_markers.push(arr_markers[i]);
-                
+
             } else {
                 arr_markers[i].setMap(null);
             }
         }
 //        map.fitBounds(bounds);
     });
+}
+
+function activateMapIfExist() {
+    if ($("#map_canvas").length) {
+        initMap();
+
+        $(".show_on_map").each(function (index) {
+
+            var show_marker = false;
+
+            var category_id = $(this).parents(".category_group").find("input[name=category_id]").val();
+
+            if (index < 10) {
+                show_marker = true;
+            }
+
+            addMarker($(this).parents(".event_container"), category_id, show_marker);
+
+        });
+    }
+}
+
+function addActiveMapDiv() {
+    if (!$("#map_canvas").length) {
+        $("#all_events").prepend('<div id="map_canvas"></div>');
+        $("#staticMap").remove();
+    }
 }

@@ -1,5 +1,5 @@
 #map_canvas{
-    height: 500px;
+    height: 400px;
     width: 100%;
 }
 .box {
@@ -58,8 +58,9 @@
     height: 0px !important;
 }
 #autocomplete_container{
-    margin-top: -92px;
     border-top-color: #ddd;
+    margin-left: 10px;
+    margin-top: -63px;
 }
 
 #autocomplete_container input{

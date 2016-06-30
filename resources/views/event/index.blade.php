@@ -144,6 +144,7 @@
 <script>
 $(document).ready(function () {
 
+    autoComplete();
     activateMapIfExist();
 });
 
@@ -169,7 +170,6 @@ $(".filter_category_list_container").click(function () {
     addActiveMapDiv();
     activateMapIfExist();
 
-
     var filters = [];
 
     $(".filter_category_list").each(function () {
@@ -181,31 +181,6 @@ $(".filter_category_list_container").click(function () {
     filterMarkers(filters);
 
 });
-
-function activateMapIfExist() {
-    if ($("#map_canvas").length > 0) {
-        initMap();
-
-        $(".show_on_map").each(function (index) {
-
-            var show_marker = false;
-
-            var category_id = $(this).parents(".category_group").find("input[name=category_id]").val();
-
-            if (index < 10) {
-                show_marker = true;
-            }
-
-            addMarker($(this).parents(".event_container"), category_id, show_marker);
-
-        });
-    }
-}
-
-function addActiveMapDiv() {
-    $("#all_events").prepend('<div id="map_canvas"></div>');
-    $("#staticMap").remove();
-}
 
 </script>
 
