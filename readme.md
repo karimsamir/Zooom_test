@@ -1,3 +1,4 @@
+Project uses Laravel framework
 To use the project
 
 1)Make sure you have composer installed https://getcomposer.org/

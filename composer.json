@@ -9,7 +9,6 @@
         "laravel/framework": "5.2.*",
         "laravelcollective/html": "^5.2",
         "fzaninotto/faker": "^1.6",
-        "barryvdh/laravel-debugbar": "^2.2",
         "jenssegers/agent": "^2.3"
     },
     "require-dev": {
